@@ -10,9 +10,10 @@ var Nav = React.createClass({
   mixins: [BootstrapMixin],
 
   propTypes: {
-    bsStyle: React.PropTypes.oneOf(['tabs','pills']),
+    bsStyle: React.PropTypes.oneOf(['tabs','pills', '']),
     stacked: React.PropTypes.bool,
     justified: React.PropTypes.bool,
+    panel: React.PropTypes.bool,
     onSelect: React.PropTypes.func
   },
 
@@ -27,6 +28,7 @@ var Nav = React.createClass({
 
     classes['nav-stacked'] = this.props.stacked;
     classes['nav-justified'] = this.props.justified;
+    classes['panel-tabs'] = this.props.panel;
 
     return this.transferPropsTo(
       <nav>

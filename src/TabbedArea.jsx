@@ -15,12 +15,14 @@ var TabbedArea = React.createClass({
 
   propTypes: {
     animation: React.PropTypes.bool,
+    panel: React.PropTypes.bool,
     onSelect: React.PropTypes.func
   },
 
   getDefaultProps: function () {
     return {
-      animation: true
+      animation: true,
+      panel: false
     };
   },
 
@@ -58,10 +60,12 @@ var TabbedArea = React.createClass({
       this.props.activeKey != null ? this.props.activeKey : this.state.activeKey;
 
     return this.transferPropsTo(
-      <div>
-        <Nav bsStyle="tabs" activeKey={activeKey} onSelect={this.handleSelect} ref="tabs">
-          {utils.modifyChildren(utils.filterChildren(this.props.children, hasTab), this.renderTab)}
-        </Nav>
+      <div className="panel">
+        <div className="panel-heading">
+          <Nav bsStyle={this.props.panel ? '' : 'tabs'} activeKey={activeKey} onSelect={this.handleSelect} ref="tabs" panel={this.props.panel}>
+            {utils.modifyChildren(utils.filterChildren(this.props.children, hasTab), this.renderTab)}
+          </Nav>
+        </div>
         <div id={this.props.id} className="tab-content" ref="panes">
           {utils.modifyChildren(this.props.children, this.renderPane)}
         </div>
