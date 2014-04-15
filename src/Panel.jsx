@@ -128,11 +128,9 @@ var Panel = React.createClass({
     var classes = this.getBsClassSet();
     classes['panel'] = true;
 
-    var heading = this.transferPropsTo(this.renderHeading());
-
     return (
       <div className={classSet(classes)} id={this.props.isCollapsable ? null : this.props.id}>
-        {heading}
+        {this.renderHeading()}
         {this.props.isCollapsable ? this.renderCollapsableBody() : this.renderBody()}
         {this.renderFooter()}
       </div>
