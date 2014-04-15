@@ -27,8 +27,12 @@ var PanelGroup = React.createClass({
   },
 
   render: function () {
+    classes = this.getBsClassSet();
+    classes['accordion'] = this.props.isAccordion;
+    classes['accordion-alt'] = this.props.isAccordion;
+
     return this.transferPropsTo(
-      <div className={classSet(this.getBsClassSet())}>
+      <div className={classSet(classes)}>
           {utils.modifyChildren(this.props.children, this.renderPanel)}
       </div>
     );

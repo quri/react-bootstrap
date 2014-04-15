@@ -202,9 +202,16 @@ var Panel = React.createClass({
 
   renderCollapsableTitle: function (header) {
     return (
-      <h4 className="panel-title">
-        {this.renderAnchor(header)}
-      </h4>
+      <a
+        href={'#' + (this.props.id || '')}
+        className={this.isOpen() ? null : 'collapsed'}
+        onClick={this.handleSelect}>
+        <div className="accordion-toggle-icon">
+          <i className="fa fa-minus-square-o" />
+          <i className="fa fa-plus-square-o" />
+        </div>
+        {header}
+      </a>
     );
   },
 
