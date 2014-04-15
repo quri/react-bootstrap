@@ -211,13 +211,43 @@ var ComponentsPage = React.createClass({
                   <p>The header is added automatically if you pass in a <code>title</code> prop.</p>
                   <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/ModalStatic.js', 'utf8')} />
 
-                  <h3 id="modals-static">Live demo</h3>
+                  <h3 id="modals-live">Live demo</h3>
                   <p>Use <code>&lt;OverlayTrigger /&gt;</code> to create a real modal that's added to the document body when opened.</p>
-                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/ModalOverlayTrigger.js', 'utf8')} />
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/ModalTrigger.js', 'utf8')} />
 
-                  <h3 id="modals-static">Custom trigger</h3>
-                  <p>Use <code>&lt;OverlayTriggerMixin /&gt;</code> in a custom component to manage the modal's state yourself.</p>
-                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/ModalOverlayTriggerMixin.js', 'utf8')} />
+                  <h3 id="modals-custom">Custom trigger</h3>
+                  <p>Use <code>&lt;OverlayMixin /&gt;</code> in a custom component to manage the modal's state yourself.</p>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/ModalOverlayMixin.js', 'utf8')} />
+                </div>
+
+                {/* Tooltip */}
+                <div className="bs-docs-section">
+                  <h1 id="tooltips" className="page-header">Tooltips <small>Tooltip</small></h1>
+                  <h2 id="tooltips-examples">Example tooltips</h2>
+
+                  <p>Tooltip component.</p>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/TooltipBasic.js', 'utf8')} />
+
+                  <p>Positioned tooltip component.</p>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/TooltipPositioned.js', 'utf8')} />
+
+                  <p>Positioned tooltip in copy.</p>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/TooltipInCopy.js', 'utf8')} />
+                </div>
+
+                {/* Popover */}
+                <div className="bs-docs-section">
+                  <h1 id="popovers" className="page-header">Popovers <small>Popover</small></h1>
+                  <h2 id="popovers-examples">Example popovers</h2>
+
+                  <p>Popovers component.</p>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/PopoverBasic.js', 'utf8')} />
+
+                  <p>Popovers component.</p>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/PopoverPositioned.js', 'utf8')} />
+
+                  <p>Popovers scrolling.</p>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/PopoverPositionedContained.js', 'utf8')} exampleClassName="bs-example-scroll" />
                 </div>
 
                 <div className="bs-docs-section">
@@ -225,32 +255,32 @@ var ComponentsPage = React.createClass({
 
                   <p className="lead">Provide up-to-date feedback on the progress of a workflow or action with simple yet flexible progress bars.</p>
 
-                  <h2 id="modals-static">Basic example</h2>
+                  <h2 id="progress-basic">Basic example</h2>
                   <p>Default progress bar.</p>
                   <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/ProgressBarBasic.js', 'utf8')} />
 
-                  <h2 id="modals-label">With label</h2>
+                  <h2 id="progress-label">With label</h2>
                   <p>Add a <code>label</code> prop to show a visible percentage. For low percentages, consider adding a min-width to ensure the label's text is fully visible.</p>
                   <p>The following keys are interpolated with the current values: <code>%(min)s</code>, <code>%(max)s</code>, <code>%(now)s</code>, <code>%(percent)s</code>, <code>%(bsStyle)s</code></p>
                   <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/ProgressBarWithLabel.js', 'utf8')} />
 
-                  <h2 id="modals-label">Screenreader only label</h2>
+                  <h2 id="progress-screenreader-label">Screenreader only label</h2>
                   <p>Add a <code>srOnly</code> prop to hide the label visually.</p>
                   <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/ProgressBarScreenreaderLabel.js', 'utf8')} />
 
-                  <h2 id="modals-label">Contextual alternatives</h2>
+                  <h2 id="progress-contextual">Contextual alternatives</h2>
                   <p>Progress bars use some of the same button and alert classes for consistent styles.</p>
                   <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/ProgressBarContextual.js', 'utf8')} />
 
-                  <h2 id="modals-label">Striped</h2>
+                  <h2 id="progress-striped">Striped</h2>
                   <p>Uses a gradient to create a striped effect. Not available in IE8.</p>
                   <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/ProgressBarStriped.js', 'utf8')} />
 
-                  <h2 id="modals-label">Animated</h2>
+                  <h2 id="progress-animated">Animated</h2>
                   <p>Add <code>active</code> prop to animate the stripes right to left. Not available in IE9 and below.</p>
                   <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/ProgressBarAnimated.js', 'utf8')} />
 
-                  <h2 id="modals-label">Stacked</h2>
+                  <h2 id="progress-stacked">Stacked</h2>
                   <p>Nest <code>&lt;ProgressBar /&gt;</code>s to stack them.</p>
                   <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/ProgressBarStacked.js', 'utf8')} />
                 </div>
@@ -302,6 +332,75 @@ var ComponentsPage = React.createClass({
                   <p>Auto close after a set time with <code>dismissAfter</code> prop.</p>
                   <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/AlertAutoDismissable.js', 'utf8')} />
                 </div>
+
+                {/* Carousels */}
+                <div className="bs-docs-section">
+                  <h1 id="carousels" className="page-header">Carousels <small>Carousel, CarouselItem</small></h1>
+                  <h2 id="carousels-examples">Example carousels</h2>
+
+                  <h3>Uncontrolled</h3>
+                  <p>Allow the component to control its own state.</p>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/CarouselUncontrolled.js', 'utf8')} exampleClassName="bs-example-tabs" />
+
+                  <h3>Controlled</h3>
+                  <p>Pass down the active state on render via props.</p>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/CarouselControlled.js', 'utf8')} exampleClassName="bs-example-tabs" />
+                </div>
+
+                {/* Labels */}
+                <div className="bs-docs-section">
+                  <h1 id="labels" className="page-header">Labels</h1>
+
+                  <h2 id="label-static">Example</h2>
+                  <p>Create a <code>{'<Label>label</Label>'}</code> show highlight information</p>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/Label.js', 'utf8')} />
+                  <h2 id="label-static">Available variations</h2>
+                  <p>Add any of the below mentioned modifier classes to change the appearance of a label.</p>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/LabelVariations.js', 'utf8')} />
+                </div>
+
+                {/* Badges */}
+                <div className="bs-docs-section">
+                  <h1 id="badges" className="page-header">Badges</h1>
+                  <p>Easily highlight new or unread items by adding a <code>{'<Badge>'}</code> to links, Bootstrap navs, and more.</p>
+                  <h2 id="badge-static">Example</h2>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/Badge.js', 'utf8')} />
+                </div>
+
+                {/* Jumbotron */}
+                <div className="bs-docs-section">
+                  <h1 id="jumbotron" className="page-header">Jumbotron</h1>
+                  <p>A lightweight, flexible component that can optionally extend the entire viewport to showcase key content on your site.</p>
+                  <h2 id="page-header-static">Example</h2>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/Jumbotron.js', 'utf8')} />
+                </div>
+
+                {/* Page Header */}
+                <div className="bs-docs-section">
+                  <h1 id="page-header" className="page-header">Page Header</h1>
+                  <p>A simple shell for an <code>h1</code> to appropriately space out and segment sections of content on a page. It can utilize the <code>h1</code>&#8217;s default <code>small</code> element, as well as most other components (with additional styles).</p>
+                  <h2 id="page-header-static">Example</h2>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/PageHeader.js', 'utf8')} />
+                </div>
+
+                {/* Wells */}
+                <div className="bs-docs-section">
+                  <h1 id="wells" className="page-header">Wells</h1>
+                  <p>Use the well as a simple effect on an element to give it an inset effect.</p>
+                  <h2 id="well-static">Default Wells</h2>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/Well.js', 'utf8')} />
+                  <h2 id="well-optins-static">Optional classes</h2>
+                  <p>Control padding and rounded corners with two optional modifier classes.</p>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/WellSizes.js', 'utf8')} />
+                </div>
+
+                {/* Glyphicons */}
+                <div className="bs-docs-section">
+                  <h1 id="glyphicons" className="page-header">Glyphicons</h1>
+                  <p>Use them in buttons, button groups for a toolbar, navigation, or prepended form inputs.</p>
+                  <h2 id="glyphicon-static">Example</h2>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/Glyphicon.js', 'utf8')} />
+                </div>
               </div>
 
               <div className="col-md-3">
@@ -321,9 +420,19 @@ var ComponentsPage = React.createClass({
                     </SubNav>
                     <NavItem href="#panels" key={4}>Panels</NavItem>
                     <NavItem href="#modals" key={5}>Modals</NavItem>
-                    <NavItem href="#progress" key={6}>Progress bars</NavItem>
-                    <NavItem href="#navs" key={7}>Navs</NavItem>
-                    <NavItem href="#tabs" key={8}>Togglable tabs</NavItem>
+                    <NavItem href="#tooltips" key={6}>Tooltips</NavItem>
+                    <NavItem href="#popovers" key={7}>Popovers</NavItem>
+                    <NavItem href="#progress" key={8}>Progress bars</NavItem>
+                    <NavItem href="#navs" key={9}>Navs</NavItem>
+                    <NavItem href="#tabs" key={10}>Togglable tabs</NavItem>
+                    <NavItem href="#alerts" key={11}>Alerts</NavItem>
+                    <NavItem href="#carousels" key={12}>Carousels</NavItem>
+                    <NavItem href="#labels" key={13}>Labels</NavItem>
+                    <NavItem href="#badges" key={14}>Badges</NavItem>
+                    <NavItem href="#jumbotron" key={15}>Jumbotron</NavItem>
+                    <NavItem href="#page-header" key={16}>Page Header</NavItem>
+                    <NavItem href="#wells" key={17}>Wells</NavItem>
+                    <NavItem href="#glyphicons" key={18}>Glyphicons</NavItem>
                   </Nav>
                   <a className="back-to-top" href="#top">
                   Back to top
