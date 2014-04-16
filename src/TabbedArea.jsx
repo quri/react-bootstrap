@@ -60,7 +60,7 @@ var TabbedArea = React.createClass({
       this.props.activeKey != null ? this.props.activeKey : this.state.activeKey;
 
     var nav = this.transferPropsTo(
-      <Nav bsStyle="tabs" activeKey={activeKey} onSelect={this.handleSelect} ref="tabs" panel={this.props.panel}>
+      <Nav bsStyle={this.props.panel ? '' : 'tabs'} activeKey={activeKey} onSelect={this.handleSelect} ref="tabs" panel={this.props.panel}>
           {utils.modifyChildren(utils.filterChildren(this.props.children, hasTab), this.renderTab)}
       </Nav>
     );
