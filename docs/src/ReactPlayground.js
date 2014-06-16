@@ -14,11 +14,15 @@ var ButtonGroup = require('../../cjs/ButtonGroup');
 var ButtonToolbar = require('../../cjs/ButtonToolbar');
 var Carousel = require('../../cjs/Carousel');
 var CarouselItem = require('../../cjs/CarouselItem');
+var Col = require('../../cjs/Col');
 var DropdownButton = require('../../cjs/DropdownButton');
 var Glyphicon = require('../../cjs/Glyphicon');
+var Grid = require('../../cjs/Grid');
+var Input = require('../../cjs/Input');
 var Jumbotron = require('../../cjs/Jumbotron');
 var Label = require('../../cjs/Label');
 var Nav = require('../../cjs/Nav');
+var Navbar = require('../../cjs/Navbar');
 var NavItem = require('../../cjs/NavItem');
 var MenuItem = require('../../cjs/MenuItem');
 var Modal = require('../../cjs/Modal');
@@ -30,8 +34,10 @@ var Panel = require('../../cjs/Panel');
 var PanelGroup = require('../../cjs/PanelGroup');
 var Popover = require('../../cjs/Popover');
 var ProgressBar = require('../../cjs/ProgressBar');
+var Row = require('../../cjs/Row');
 var SplitButton = require('../../cjs/SplitButton');
 var TabbedArea = require('../../cjs/TabbedArea');
+var Table = require('../../cjs/Table');
 var TabPane = require('../../cjs/TabPane');
 var Tooltip = require('../../cjs/Tooltip');
 var Well = require('../../cjs/Well');
@@ -164,6 +170,9 @@ var ReactPlayground = React.createClass({
     var classes = {
       'bs-example': true
     };
+    var toggleClasses = {
+      'code-toggle': true
+    };
     var editor;
 
     if (this.props.exampleClassName){
@@ -178,6 +187,7 @@ var ReactPlayground = React.createClass({
              className="highlight"
              codeText={this.state.code}/>
         );
+       toggleClasses.open = true;
     }
     return (
       <div className="playground">
@@ -185,7 +195,7 @@ var ReactPlayground = React.createClass({
           <div ref="mount" />
         </div>
         {editor}
-        <a onClick={this.handleCodeModeToggle} href="#">{this.state.mode === this.MODES.NONE ? 'show code' : 'hide code'}</a>
+        <a className={classSet(toggleClasses)} onClick={this.handleCodeModeToggle} href="#">{this.state.mode === this.MODES.NONE ? 'show code' : 'hide code'}</a>
       </div>
       );
   },

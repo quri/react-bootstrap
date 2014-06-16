@@ -13,50 +13,79 @@ var DropdownButton = React.createClass({
   mixins: [BootstrapMixin, DropdownStateMixin],
 
   propTypes: {
-    pullRight:    React.PropTypes.bool,
-    title:    React.PropTypes.renderable,
-    href:     React.PropTypes.string,
-    onClick:  React.PropTypes.func,
-    onSelect: React.PropTypes.func
+    pullRight: React.PropTypes.bool,
+    dropup:    React.PropTypes.bool,
+    title:     React.PropTypes.renderable,
+    href:      React.PropTypes.string,
+    onClick:   React.PropTypes.func,
+    onSelect:  React.PropTypes.func,
+    navItem:   React.PropTypes.bool
   },
 
   render: function () {
+    var className = 'dropdown-toggle';
+
+    var renderMethod = this.props.navItem ?
+      'renderNavItem' : 'renderButtonGroup';
+
+    return this[renderMethod]([
+      this.transferPropsTo(<Button
+        ref="dropdownButton"
+        className={className}
+        onClick={this.handleDropdownClick}
+        key={0}
+        navDropdown={this.props.navItem}
+        navItem={null}
+        title={null}
+        pullRight={null}
+        dropup={null}>
+        {this.props.title}{' '}
+        <span className="caret" />
+      </Button>),
+      <DropdownMenu
+        ref="menu"
+        aria-labelledby={this.props.id}
+        onSelect={this.handleOptionSelect}
+        pullRight={this.props.pullRight}
+        key={1}>
+        {this.props.children}
+      </DropdownMenu>
+    ]);
+  },
+
+  renderButtonGroup: function (children) {
     var groupClasses = {
         'open': this.state.open,
         'dropup': this.props.dropup
       };
 
-    var className = this.props.className ?
-      this.props.className + ' dropdown-toggle' : 'dropdown-toggle';
-
     return (
       <ButtonGroup
         bsSize={this.props.bsSize}
         className={classSet(groupClasses)}>
-        <Button
-          ref="dropdownButton"
-          href={this.props.href}
-          bsStyle={this.props.bsStyle}
-          className={className}
-          onClick={this.handleOpenClick}
-          id={this.props.id}>
-          {this.props.title}{' '}
-          <span className="caret" />
-        </Button>
-
-        <DropdownMenu
-          ref="menu"
-          aria-labelledby={this.props.id}
-          onSelect={this.handleOptionSelect}
-          pullRight={this.props.pullRight}>
-          {this.props.children}
-        </DropdownMenu>
+        {children}
       </ButtonGroup>
     );
   },
 
-  handleOpenClick: function () {
-    this.setDropdownState(true);
+  renderNavItem: function (children) {
+    var classes = {
+        'dropdown': true,
+        'open': this.state.open,
+        'dropup': this.props.dropup
+      };
+
+    return (
+      <li className={classSet(classes)}>
+        {children}
+      </li>
+    );
+  },
+
+  handleDropdownClick: function (e) {
+    e.preventDefault();
+
+    this.setDropdownState(!this.state.open);
   },
 
   handleOptionSelect: function (key) {

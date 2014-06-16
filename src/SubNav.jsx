@@ -1,9 +1,10 @@
 /** @jsx React.DOM */
 
-import React          from './react-es6';
-import classSet       from './react-es6/lib/cx';
-import BootstrapMixin from './BootstrapMixin';
-import utils          from './utils';
+import React                  from './react-es6';
+import classSet               from './react-es6/lib/cx';
+import BootstrapMixin         from './BootstrapMixin';
+import utils                  from './utils';
+import ValidComponentChildren from './ValidComponentChildren';
 
 
 var SubNav = React.createClass({
@@ -15,7 +16,7 @@ var SubNav = React.createClass({
     disabled: React.PropTypes.bool,
     href: React.PropTypes.string,
     title: React.PropTypes.string,
-    text: React.PropTypes.renderable,
+    text: React.PropTypes.renderable
   },
 
   getDefaultProps: function () {
@@ -39,8 +40,6 @@ var SubNav = React.createClass({
   },
 
   isChildActive: function (child) {
-    var isActive = false;
-
     if (child.props.active) {
       return true;
     }
@@ -54,7 +53,9 @@ var SubNav = React.createClass({
     }
 
     if (child.props.children) {
-      React.Children.forEach(
+      var isActive = false;
+
+      ValidComponentChildren.forEach(
         child.props.children,
         function (child) {
           if (this.isChildActive(child)) {
@@ -104,7 +105,7 @@ var SubNav = React.createClass({
           {this.props.text}
         </a>
         <ul className="nav">
-          {utils.modifyChildren(this.props.children, this.renderNavItem)}
+          {ValidComponentChildren.map(this.props.children, this.renderNavItem)}
         </ul>
       </li>
     );
@@ -115,7 +116,7 @@ var SubNav = React.createClass({
       child,
       {
         active: this.getChildActiveProp(child),
-        onSelect: utils.createChainedFunction(child.onSelect, this.props.onSelect),
+        onSelect: utils.createChainedFunction(child.props.onSelect, this.props.onSelect),
         ref: child.props.ref,
         key: child.props.key
       }

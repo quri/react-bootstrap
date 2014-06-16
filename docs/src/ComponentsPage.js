@@ -199,7 +199,7 @@ var ComponentsPage = React.createClass({
                   <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/PanelGroupUncontrolled.js', 'utf8')} />
 
                   <h3 id="panels-accordion">Accordions</h3>
-                  <p><code>&lt;Accordion /&gt;</code> aliases <code>&lt;PanelGroup isAccordion /&gt;</code>.</p>
+                  <p><code>&lt;Accordion /&gt;</code> aliases <code>&lt;PanelGroup accordion /&gt;</code>.</p>
                   <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/PanelGroupAccordion.js', 'utf8')} />
                 </div>
 
@@ -294,6 +294,14 @@ var ComponentsPage = React.createClass({
                   <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/NavBasic.js', 'utf8')} />
                 </div>
 
+                {/* Navbar */}
+                <div className="bs-docs-section">
+                  <h1 id="navbars" className="page-header">Navbars <small>Navbar, Nav, NavItem</small></h1>
+                  <h2 id="navbars-examples">Example navbars</h2>
+
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/NavbarBasic.js', 'utf8')} />
+                </div>
+
                 {/* Tabbed Areas */}
                 <div className="bs-docs-section">
                   <h1 id="tabs" className="page-header">Togglable tabs <small>TabbedArea, TabPane</small></h1>
@@ -347,6 +355,14 @@ var ComponentsPage = React.createClass({
                   <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/CarouselControlled.js', 'utf8')} exampleClassName="bs-example-tabs" />
                 </div>
 
+                {/* Grids */}
+                <div className="bs-docs-section">
+                  <h1 id="grids" className="page-header">Grids <small>Grid, Row, Col</small></h1>
+                  <h2 id="grids-examples">Example grids</h2>
+
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/GridBasic.js', 'utf8')} exampleClassName="bs-example-tabs" />
+                </div>
+
                 {/* Labels */}
                 <div className="bs-docs-section">
                   <h1 id="labels" className="page-header">Labels</h1>
@@ -365,6 +381,10 @@ var ComponentsPage = React.createClass({
                   <p>Easily highlight new or unread items by adding a <code>{'<Badge>'}</code> to links, Bootstrap navs, and more.</p>
                   <h2 id="badge-static">Example</h2>
                   <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/Badge.js', 'utf8')} />
+                  <div className="bs-callout bs-callout-info">
+                    <h4>Cross-browser compatibility</h4>
+                    <p>Unlike regular Bootstrap badges self collapse even in Internet Explorer 8.</p>
+                  </div>
                 </div>
 
                 {/* Jumbotron */}
@@ -401,6 +421,45 @@ var ComponentsPage = React.createClass({
                   <h2 id="glyphicon-static">Example</h2>
                   <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/Glyphicon.js', 'utf8')} />
                 </div>
+
+                {/* Tables */}
+                <div className="bs-docs-section">
+                  <h1 id="tables" className="page-header">Tables</h1>
+
+                  <h2 id="table-basic">Example</h2>
+                  <p>Use the <code>striped</code>, <code>bordered</code>, <code>condensed</code> and <code>hover</code> props to customise the table.</p>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/TableBasic.js', 'utf8')} />
+                  <h2 id="table-responsive">Responsive</h2>
+                  <p>Add <code>responsive</code> prop to make them scroll horizontally up to small devices (under 768px). When viewing on anything larger than 768px wide, you will not see any difference in these tables.</p>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/TableResponsive.js', 'utf8')} />
+                </div>
+
+                {/* Input */}
+                <div className="bs-docs-section">
+                  <h1 id="input" className="page-header">Input</h1>
+                  <p>Renders an input in bootstrap wrappers. Supports label, help, text input add-ons, validation and use as wrapper.
+                  Use <code>getValue()</code> or <code>getChecked()</code> to get the current state.
+                  The helper method <code>getInputDOMNode()</code> returns the internal input element.</p>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/Input.js', 'utf8')} />
+                  <h2 id="input-types">Types</h2>
+                  <p>Supports <code>select</code>, <code>textarea</code>, <code>static</code> as well as standard HTML input types.</p>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/InputTypes.js', 'utf8')} />
+                  <h2 id="input-addons">Add-ons</h2>
+                  <p>Use <code>addonBefore</code> and <code>addonAfter</code>. Does not support buttons.</p>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/InputAddons.js', 'utf8')} />
+                  <h2 id="input-validation">Validation</h2>
+                  <p>Set <code>bsStyle</code> to one of <code>success</code>, <code>warning</code> or <code>error</code>.
+                  Add <code>hasFeedback</code> to show glyphicon. Glyphicon may need additional styling if there is an add-on or no label.</p>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/InputValidation.js', 'utf8')} />
+                  <h2 id="input-horizontal">Horizontal forms</h2>
+                  <p>Use <code>labelClassName</code> and <code>wrapperClassName</code> properties to add col classes manually.
+                  <code>checkbox</code> and <code>radio</code> types need special treatment because label wraps input.</p>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/InputHorizontal.js', 'utf8')} />
+                  <h2 id="input-wrapper">Use as a wrapper</h2>
+                  <p>If <code>type</code> is not set, child element(s) will be rendered instead of an input element.
+                  <code>getValue()</code> will not work when used this way.</p>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/InputWrapper.js', 'utf8')} />
+                </div>
               </div>
 
               <div className="col-md-3">
@@ -424,15 +483,19 @@ var ComponentsPage = React.createClass({
                     <NavItem href="#popovers" key={7}>Popovers</NavItem>
                     <NavItem href="#progress" key={8}>Progress bars</NavItem>
                     <NavItem href="#navs" key={9}>Navs</NavItem>
-                    <NavItem href="#tabs" key={10}>Togglable tabs</NavItem>
-                    <NavItem href="#alerts" key={11}>Alerts</NavItem>
-                    <NavItem href="#carousels" key={12}>Carousels</NavItem>
-                    <NavItem href="#labels" key={13}>Labels</NavItem>
-                    <NavItem href="#badges" key={14}>Badges</NavItem>
-                    <NavItem href="#jumbotron" key={15}>Jumbotron</NavItem>
-                    <NavItem href="#page-header" key={16}>Page Header</NavItem>
-                    <NavItem href="#wells" key={17}>Wells</NavItem>
-                    <NavItem href="#glyphicons" key={18}>Glyphicons</NavItem>
+                    <NavItem href="#navbars" key={10}>Navbars</NavItem>
+                    <NavItem href="#tabs" key={11}>Togglable tabs</NavItem>
+                    <NavItem href="#alerts" key={12}>Alerts</NavItem>
+                    <NavItem href="#carousels" key={13}>Carousels</NavItem>
+                    <NavItem href="#grids" key={14}>Grids</NavItem>
+                    <NavItem href="#labels" key={15}>Labels</NavItem>
+                    <NavItem href="#badges" key={16}>Badges</NavItem>
+                    <NavItem href="#jumbotron" key={17}>Jumbotron</NavItem>
+                    <NavItem href="#page-header" key={18}>Page Header</NavItem>
+                    <NavItem href="#wells" key={19}>Wells</NavItem>
+                    <NavItem href="#glyphicons" key={20}>Glyphicons</NavItem>
+                    <NavItem href="#tables" key={21}>Tables</NavItem>
+                    <NavItem href="#input" key={22}>Input</NavItem>
                   </Nav>
                   <a className="back-to-top" href="#top">
                   Back to top

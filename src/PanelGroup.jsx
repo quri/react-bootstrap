@@ -1,14 +1,18 @@
 /** @jsx React.DOM */
 
-import React          from './react-es6';
-import classSet       from './react-es6/lib/cx';
-import BootstrapMixin from './BootstrapMixin';
-import utils          from './utils';
+import React                  from './react-es6';
+import classSet               from './react-es6/lib/cx';
+import BootstrapMixin         from './BootstrapMixin';
+import utils                  from './utils';
+import ValidComponentChildren from './ValidComponentChildren';
 
 var PanelGroup = React.createClass({
   mixins: [BootstrapMixin],
 
   propTypes: {
+    collapsable: React.PropTypes.bool,
+    activeKey: React.PropTypes.bool,
+    defaultActiveKey: React.PropTypes.bool,
     onSelect: React.PropTypes.func
   },
 
@@ -33,7 +37,7 @@ var PanelGroup = React.createClass({
 
     return this.transferPropsTo(
       <div className={classSet(classes)}>
-          {utils.modifyChildren(this.props.children, this.renderPanel)}
+        {ValidComponentChildren.map(this.props.children, this.renderPanel)}
       </div>
     );
   },
@@ -48,9 +52,9 @@ var PanelGroup = React.createClass({
       ref: child.props.ref
     };
 
-    if (this.props.isAccordion) {
-      props.isCollapsable = true;
-      props.isOpen = (child.props.key === activeKey);
+    if (this.props.accordion) {
+      props.collapsable = true;
+      props.expanded = (child.props.key === activeKey);
       props.onSelect = this.handleSelect;
     }
 
