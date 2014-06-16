@@ -124,7 +124,7 @@ var Panel = React.createClass({
     return (
       <a
         href={'#' + (this.props.id || '')}
-        className={this.isOpen() ? null : 'collapsed'}
+        className={this.isExpanded() ? null : 'collapsed'}
         onClick={this.handleSelect}>
         <div className="accordion-toggle-icon">
           <i className="fa fa-minus-square-o" />
