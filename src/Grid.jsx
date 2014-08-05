@@ -1,13 +1,13 @@
 /** @jsx React.DOM */
 
-import React          from './react-es6';
-import PropTypes      from './PropTypes';
+var React = require('react');
+var CustomPropTypes = require('./utils/CustomPropTypes');
 
 
 var Grid = React.createClass({
   propTypes: {
     fluid: React.PropTypes.bool,
-    componentClass: PropTypes.componentClass
+    componentClass: CustomPropTypes.componentClass.isRequired
   },
 
   getDefaultProps: function () {
@@ -27,4 +27,4 @@ var Grid = React.createClass({
   }
 });
 
-export default = Grid;
+module.exports = Grid;

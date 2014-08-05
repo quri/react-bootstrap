@@ -1,9 +1,9 @@
 /** @jsx React.DOM */
 
-import React          from './react-es6';
-import classSet       from './react-es6/lib/cx';
-import PropTypes      from './PropTypes';
-import constants      from './constants';
+var React = require('react');
+var classSet = require('./utils/classSet');
+var CustomPropTypes = require('./utils/CustomPropTypes');
+var constants = require('./constants');
 
 
 var Col = React.createClass({
@@ -24,7 +24,7 @@ var Col = React.createClass({
     smPull: React.PropTypes.number,
     mdPull: React.PropTypes.number,
     lgPull: React.PropTypes.number,
-    componentClass: PropTypes.componentClass
+    componentClass: CustomPropTypes.componentClass.isRequired
   },
 
   getDefaultProps: function () {
@@ -73,4 +73,4 @@ var Col = React.createClass({
   }
 });
 
-export default = Col;
+module.exports = Col;

@@ -1,5 +1,5 @@
-import React  from './react-es6';
-import ReactTransitionEvents  from './react-es6/lib/ReactTransitionEvents';
+var React = require('react');
+var TransitionEvents = require('./utils/TransitionEvents');
 
 var CollapsableMixin = {
 
@@ -36,7 +36,7 @@ var CollapsableMixin = {
     var node = this.getCollapsableDOMNode();
 
     if (node) {
-      ReactTransitionEvents.addEndEventListener(
+      TransitionEvents.addEndEventListener(
         node,
         this.handleTransitionEnd
       );
@@ -47,7 +47,7 @@ var CollapsableMixin = {
     var node = this.getCollapsableDOMNode();
 
     if (node) {
-      ReactTransitionEvents.addEndEventListener(
+      TransitionEvents.addEndEventListener(
         node,
         this.handleTransitionEnd
       );
@@ -73,8 +73,10 @@ var CollapsableMixin = {
     }
   },
 
-  componentDidUpdate: function () {
-    this._afterRender();
+  componentDidUpdate: function (prevProps, prevState) {
+    if (this.state.collapsing !== prevState.collapsing) {
+      this._afterRender();
+    }
   },
 
   _afterRender: function () {
@@ -121,4 +123,4 @@ var CollapsableMixin = {
   }
 };
 
-export default = CollapsableMixin;
+module.exports = CollapsableMixin;

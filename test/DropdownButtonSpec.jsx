@@ -73,7 +73,7 @@ describe('DropdownButton', function () {
     assert.notOk(instance.getDOMNode().className.match(/\bopen\b/));
   });
 
-  it('Should open when clicked', function (done) {
+  it('Should open when clicked', function () {
     instance = ReactTestUtils.renderIntoDocument(
       <DropdownButton title="Title">
         <MenuItem key="1">MenuItem 1 content</MenuItem>
@@ -81,17 +81,14 @@ describe('DropdownButton', function () {
       </DropdownButton>
     );
 
-    instance.componentDidUpdate = function () {
-      assert.ok(instance.getDOMNode().className.match(/\bopen\b/));
-      done();
-    };
-
     ReactTestUtils.SimulateNative.click(instance.refs.dropdownButton.getDOMNode());
+    assert.ok(instance.getDOMNode().className.match(/\bopen\b/));
   });
 
   it('should call onSelect with key when MenuItem is clicked', function (done) {
     function handleSelect(key) {
       assert.equal(key, 2);
+      assert.equal(instance.state.open, false);
       done();
     }
 
@@ -109,8 +106,41 @@ describe('DropdownButton', function () {
     );
   });
 
+  it('should call MenuItem onSelect with key when MenuItem is clicked', function (done) {
+    function handleSelect(key) {
+      assert.equal(key, 2);
+      assert.equal(instance.state.open, false);
+      done();
+    }
+
+    instance = ReactTestUtils.renderIntoDocument(
+      <DropdownButton title="Title">
+        <MenuItem key={1}>MenuItem 1 content</MenuItem>
+        <MenuItem key={2} onSelect={handleSelect}>MenuItem 2 content</MenuItem>
+      </DropdownButton>
+    );
+
+    var menuItems = ReactTestUtils.scryRenderedComponentsWithType(instance, MenuItem);
+    assert.equal(menuItems.length, 2);
+    ReactTestUtils.SimulateNative.click(
+      ReactTestUtils.findRenderedDOMComponentWithTag(menuItems[1], 'a')
+    );
+  });
+
+  it('should not set onSelect to child with no onSelect prop', function () {
+    instance = ReactTestUtils.renderIntoDocument(
+      <DropdownButton title="Title">
+        <MenuItem key={1}>MenuItem 1 content</MenuItem>
+        <MenuItem key={2}>MenuItem 2 content</MenuItem>
+      </DropdownButton>
+    );
+
+    var menuItems = ReactTestUtils.scryRenderedComponentsWithType(instance, MenuItem);
+    assert.notOk(menuItems[0].props.onSelect);
+  });
+
   describe('when open', function () {
-    beforeEach(function (done) {
+    beforeEach(function () {
       instance = ReactTestUtils.renderIntoDocument(
         <DropdownButton title="Title">
           <MenuItem key={1}>MenuItem 1 content</MenuItem>
@@ -118,18 +148,15 @@ describe('DropdownButton', function () {
         </DropdownButton>
       );
 
-      instance.setDropdownState(true, done);
+      instance.setDropdownState(true);
     });
 
-    it('should close on click', function (done) {
-      instance.componentDidUpdate = function () {
-        assert.notOk(instance.getDOMNode().className.match(/\bopen\b/));
-        done();
-      };
-
+    it('should close on click', function () {
       var evt = document.createEvent('HTMLEvents');
       evt.initEvent('click', true, true);
       document.documentElement.dispatchEvent(evt);
+
+      assert.notOk(instance.getDOMNode().className.match(/\bopen\b/));
     });
   });
 

@@ -1,12 +1,11 @@
 /** @jsx React.DOM */
 /*global describe, beforeEach, afterEach, it, assert */
 
-var React           = require('react');
-var ReactTestUtils  = require('react/lib/ReactTestUtils');
-var TabbedArea      = require('../cjs/TabbedArea');
-var TabPane         = require('../cjs/TabPane');
-var utils           = require('./utils');
-var ValidComponentChildren = require('../cjs/ValidComponentChildren');
+var React                  = require('react');
+var ReactTestUtils         = require('react/lib/ReactTestUtils');
+var TabbedArea             = require('../cjs/TabbedArea');
+var TabPane                = require('../cjs/TabPane');
+var ValidComponentChildren = require('../cjs/utils/ValidComponentChildren');
 
 describe('TabbedArea', function () {
   it('Should show the correct tab', function () {
@@ -23,7 +22,7 @@ describe('TabbedArea', function () {
     assert.equal(instance.refs.tabs.props.activeKey, 1);
   });
 
-	it('Should only show the tabs with `TabPane.props.tab` set', function () {
+  it('Should only show the tabs with `TabPane.props.tab` set', function () {
     var instance = ReactTestUtils.renderIntoDocument(
       <TabbedArea activeKey={3}>
         <TabPane tab="Tab 1" key={1}>Tab 1 content</TabPane>
@@ -36,7 +35,7 @@ describe('TabbedArea', function () {
     assert.equal(instance.refs.tabs.props.activeKey, 3);
   });
 
-	it('Should allow tab to have React components', function () {
+  it('Should allow tab to have React components', function () {
     var tabTitle = (
       <strong className="special-tab">Tab 2</strong>
     );
@@ -128,7 +127,7 @@ describe('TabbedArea', function () {
     assert.equal(instance.refs.tabs.props.activeKey, 0);
   });
 
-  it('Should show the correct tab when selected', function (done) {
+  it('Should show the correct tab when selected', function () {
     var tab1 = <span className="tab1">Tab 1</span>;
     var instance = ReactTestUtils.renderIntoDocument(
       <TabbedArea defaultActiveKey={2} animation={false}>
@@ -137,16 +136,34 @@ describe('TabbedArea', function () {
       </TabbedArea>
     );
 
-    utils.nextUpdate(instance, function () {
-      assert.equal(instance.refs.pane1.props.active, true);
-      assert.equal(instance.refs.pane2.props.active, false);
-
-      assert.equal(instance.refs.tabs.props.activeKey, 1);
-      done();
-    });
-
     ReactTestUtils.Simulate.click(
       ReactTestUtils.findRenderedDOMComponentWithClass(instance, 'tab1')
     );
+
+    assert.equal(instance.refs.pane1.props.active, true);
+    assert.equal(instance.refs.pane2.props.active, false);
+    assert.equal(instance.refs.tabs.props.activeKey, 1);
+  });
+
+  it('Should pass default bsStyle (of "tabs") to Nav', function () {
+    var instance = ReactTestUtils.renderIntoDocument(
+        <TabbedArea defaultActiveKey={1} animation={false}>
+            <TabPane tab="Tab 1" key={1} ref="panel1">Tab 1 content</TabPane>
+            <TabPane tab="Tab 2" key={2} ref="panel2">Tab 2 content</TabPane>
+        </TabbedArea>
+    );
+
+    assert.ok(ReactTestUtils.findRenderedDOMComponentWithClass(instance, 'nav-tabs'));
+  });
+
+  it('Should pass bsStyle to Nav', function () {
+    var instance = ReactTestUtils.renderIntoDocument(
+        <TabbedArea bsStyle="pills" defaultActiveKey={1} animation={false}>
+            <TabPane tab="Tab 1" key={1} ref="panel1">Tab 1 content</TabPane>
+            <TabPane tab="Tab 2" key={2} ref="panel2">Tab 2 content</TabPane>
+        </TabbedArea>
+    );
+
+    assert.ok(ReactTestUtils.findRenderedDOMComponentWithClass(instance, 'nav-pills'));
   });
 });

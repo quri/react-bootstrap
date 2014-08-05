@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 /*global describe, it, assert */
 
+var React          = require('react');
 var ReactTestUtils = require('react/lib/ReactTestUtils');
 var Button         = require('../cjs/Button');
 
@@ -10,6 +11,14 @@ describe('Button', function () {
           Button({}, 'Title')
         );
     assert.equal(instance.getDOMNode().nodeName, 'BUTTON');
+  });
+
+  it('Should output a component with button classes', function () {
+    var instance = ReactTestUtils.renderIntoDocument(
+          Button({componentClass: React.DOM.input}, 'Title')
+        );
+    assert.equal(instance.getDOMNode().nodeName, 'INPUT');
+    assert.equal(instance.getDOMNode().getAttribute('class'), 'btn btn-default');
   });
 
   it('Should have type=button by default', function () {
@@ -33,6 +42,16 @@ describe('Button', function () {
         );
 
     assert.equal(instance.getDOMNode().nodeName, 'A');
+    assert.equal(instance.getDOMNode().getAttribute('href'), href);
+  });
+
+  it('Should output an input if called with a href and an input component', function () {
+    var href = '/url';
+    var instance = ReactTestUtils.renderIntoDocument(
+          Button({href: href, componentClass: React.DOM.input}, 'Title')
+        );
+
+    assert.equal(instance.getDOMNode().nodeName, 'INPUT');
     assert.equal(instance.getDOMNode().getAttribute('href'), href);
   });
 
@@ -77,6 +96,15 @@ describe('Button', function () {
           Button({bsStyle: 'danger'}, 'Title')
         );
 
+    assert.ok(instance.getDOMNode().className.match(/\bbtn-danger\b/));
+  });
+
+  it('Should honour additional classes passed in, adding not overriding', function () {
+    var instance = ReactTestUtils.renderIntoDocument(
+      <Button className="bob" bsStyle="danger">Title</Button>
+    );
+
+    assert.ok(instance.getDOMNode().className.match(/\bbob\b/));
     assert.ok(instance.getDOMNode().className.match(/\bbtn-danger\b/));
   });
 

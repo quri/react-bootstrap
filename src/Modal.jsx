@@ -1,9 +1,10 @@
 /** @jsx React.DOM */
 
-import React            from './react-es6';
-import classSet         from './react-es6/lib/cx';
-import BootstrapMixin   from './BootstrapMixin';
-import FadeMixin        from './FadeMixin';
+var React = require('react');
+var classSet = require('./utils/classSet');
+var BootstrapMixin = require('./BootstrapMixin');
+var FadeMixin = require('./FadeMixin');
+var EventListener = require('./utils/EventListener');
 
 
 // TODO:
@@ -35,10 +36,15 @@ var Modal = React.createClass({
 
   render: function () {
     var modalStyle = {display: 'block'};
-    var classes = this.getBsClassSet();
+    var dialogClasses = this.getBsClassSet();
+    delete dialogClasses.modal;
+    dialogClasses['modal-dialog'] = true;
 
-    classes['fade'] = this.props.animation;
-    classes['in'] = !this.props.animation || !document.querySelectorAll;
+    var classes = {
+      modal: true,
+      fade: this.props.animation,
+      'in': !this.props.animation || !document.querySelectorAll
+    };
 
     var modal = this.transferPropsTo(
       <div
@@ -49,7 +55,7 @@ var Modal = React.createClass({
         className={classSet(classes)}
         onClick={this.props.backdrop === true ? this.handleBackdropClick : null}
         ref="modal">
-        <div className="modal-dialog">
+        <div className={classSet(dialogClasses)}>
           <div className="modal-content">
             {this.props.title ? this.renderHeader() : null}
             {this.props.children}
@@ -105,11 +111,12 @@ var Modal = React.createClass({
   },
 
   componentDidMount: function () {
-    document.addEventListener('keyup', this.handleDocumentKeyUp);
+    this._onDocumentKeyupListener =
+      EventListener.listen(document, 'keyup', this.handleDocumentKeyUp);
   },
 
   componentWillUnmount: function () {
-    document.removeEventListener('keyup', this.handleDocumentKeyUp);
+    this._onDocumentKeyupListener.remove();
   },
 
   handleBackdropClick: function (e) {
@@ -127,4 +134,4 @@ var Modal = React.createClass({
   }
 });
 
-export default = Modal;
+module.exports = Modal;

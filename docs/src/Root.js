@@ -76,22 +76,42 @@ var Root = React.createClass({
     // when initialising the browser environment we can bootstrap from the
     // same props as what each page was rendered with.
     var browserInitScriptObj = {
-      __html: 'window.INITIAL_PROPS = ' + JSON.stringify(this.props) + ';'
+      __html:
+        "window.INITIAL_PROPS = " + JSON.stringify(this.props) + ";\n" +
+        // console noop shim for IE8/9
+        "(function (w) {\n" +
+        "  var noop = function () {};\n" +
+        "  if (!w.console) {\n" +
+        "    w.console = {};\n" +
+        "    ['log', 'info', 'warn', 'error'].forEach(function (method) {\n" +
+        "      w.console[method] = noop;\n" +
+        "    });\n" +
+        " }\n" +
+        "}(window));\n"
+    };
+
+    var head = {
+      __html: '<title>React Bootstrap</title>' +
+        '<meta http-equiv="X-UA-Compatible" content="IE=edge" />' +
+        '<meta name="viewport" content="width=device-width, initial-scale=1.0" />' +
+        '<link href="vendor/bootstrap/bootstrap.css" rel="stylesheet" />' +
+        '<link href="vendor/bootstrap/docs.css" rel="stylesheet" />' +
+        '<link href="vendor/codemirror/codemirror.css" rel="stylesheet" />' +
+        '<link href="vendor/codemirror/solarized.css" rel="stylesheet" />' +
+        '<link href="vendor/codemirror/syntax.css" rel="stylesheet" />' +
+        '<link href="assets/style.css" rel="stylesheet" />' +
+        '<!--[if lt IE 9]>' +
+        '<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>' +
+        '<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>' +
+        '<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>' +
+        '<script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/3.4.0/es5-shim.js"></script>' +
+        '<script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/3.4.0/es5-sham.js"></script>' +
+        '<![endif]-->'
     };
 
     return (
         <html>
-          <head>
-            <title>React Bootstrap</title>
-            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-            <link href="vendor/bootstrap/bootstrap.css" rel="stylesheet" />
-            <link href="vendor/bootstrap/docs.css" rel="stylesheet" />
-            <link href="vendor/codemirror/codemirror.css" rel="stylesheet" />
-            <link href="vendor/codemirror/solarized.css" rel="stylesheet" />
-            <link href="vendor/codemirror/syntax.css" rel="stylesheet" />
-            <link href="assets/style.css" rel="stylesheet" />
-          </head>
+          <head dangerouslySetInnerHTML={head} />
 
           <body>
             <Locations path={Root.getBaseUrl() + this.props.initialPath}>

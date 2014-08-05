@@ -1,12 +1,13 @@
 /** @jsx React.DOM */
 
-import React                  from './react-es6';
-import classSet               from './react-es6/lib/cx';
-import BootstrapMixin         from './BootstrapMixin';
-import PropTypes              from './PropTypes';
-import utils                  from './utils';
-import Nav                    from './Nav';
-import ValidComponentChildren from './ValidComponentChildren';
+var React = require('react');
+var BootstrapMixin = require('./BootstrapMixin');
+var CustomPropTypes = require('./utils/CustomPropTypes');
+var classSet = require('./utils/classSet');
+var cloneWithProps = require('./utils/cloneWithProps');
+var ValidComponentChildren = require('./utils/ValidComponentChildren');
+var createChainedFunction = require('./utils/createChainedFunction');
+var Nav = require('./Nav');
 
 
 var Navbar = React.createClass({
@@ -19,7 +20,7 @@ var Navbar = React.createClass({
     inverse: React.PropTypes.bool,
     fluid: React.PropTypes.bool,
     role: React.PropTypes.string,
-    componentClass: PropTypes.componentClass,
+    componentClass: CustomPropTypes.componentClass.isRequired,
     brand: React.PropTypes.renderable,
     toggleButton: React.PropTypes.renderable,
     onToggle: React.PropTypes.func,
@@ -83,10 +84,10 @@ var Navbar = React.createClass({
   },
 
   renderChild: function (child) {
-    return utils.cloneWithProps(child, {
+    return cloneWithProps(child, {
       navbar: true,
-      isCollapsable: this.props.toggleNavKey != null && this.props.toggleNavKey === child.props.key,
-      isOpen: this.props.toggleNavKey != null && this.props.toggleNavKey === child.props.key && this.isNavOpen(),
+      collapsable: this.props.toggleNavKey != null && this.props.toggleNavKey === child.props.key,
+      expanded: this.props.toggleNavKey != null && this.props.toggleNavKey === child.props.key && this.isNavOpen(),
       key: child.props.key,
       ref: child.props.ref
     });
@@ -97,7 +98,7 @@ var Navbar = React.createClass({
 
     if (this.props.brand) {
       brand = React.isValidComponent(this.props.brand) ?
-        utils.cloneWithProps(this.props.brand, {
+        cloneWithProps(this.props.brand, {
           className: 'navbar-brand'
         }) : <span className="navbar-brand">{this.props.brand}</span>;
     }
@@ -114,9 +115,9 @@ var Navbar = React.createClass({
     var children;
 
     if (React.isValidComponent(this.props.toggleButton)) {
-      return utils.cloneWithProps(this.props.toggleButton, {
+      return cloneWithProps(this.props.toggleButton, {
         className: 'navbar-toggle',
-        onClick: utils.createChainedFunction(this.handleToggle, this.props.toggleButton.props.onClick)
+        onClick: createChainedFunction(this.handleToggle, this.props.toggleButton.props.onClick)
       });
     }
 
@@ -136,4 +137,4 @@ var Navbar = React.createClass({
   }
 });
 
-export default = Navbar;
+module.exports = Navbar;

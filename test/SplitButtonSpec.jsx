@@ -113,7 +113,7 @@ describe('SplitButton', function () {
     assert.notOk(instance.getDOMNode().className.match(/\bopen\b/));
   });
 
-  it('Should open when clicked', function (done) {
+  it('Should open when clicked', function () {
     instance = ReactTestUtils.renderIntoDocument(
         <SplitButton title="Title">
           <MenuItem key="1">MenuItem 1 content</MenuItem>
@@ -121,12 +121,9 @@ describe('SplitButton', function () {
         </SplitButton>
     );
 
-    instance.componentDidUpdate = function () {
-        assert.ok(instance.getDOMNode().className.match(/\bopen\b/));
-        done();
-    };
-
     ReactTestUtils.SimulateNative.click(instance.refs.dropdownButton.getDOMNode());
+
+    assert.ok(instance.getDOMNode().className.match(/\bopen\b/));
   });
 
   it('should call onSelect with key when MenuItem is clicked', function (done) {
@@ -172,7 +169,7 @@ describe('SplitButton', function () {
   });
 
   describe('when open', function () {
-    beforeEach(function (done) {
+    beforeEach(function () {
       instance = ReactTestUtils.renderIntoDocument(
         <SplitButton title="Title">
           <MenuItem key={1}>MenuItem 1 content</MenuItem>
@@ -180,18 +177,15 @@ describe('SplitButton', function () {
         </SplitButton>
       );
 
-      instance.setDropdownState(true, done);
+      instance.setDropdownState(true);
     });
 
-    it('should close when button is clicked', function (done) {
-      instance.componentDidUpdate = function () {
-        assert.notOk(instance.getDOMNode().className.match(/\bopen\b/));
-        done();
-      };
-
+    it('should close when button is clicked', function () {
       var evt = document.createEvent('HTMLEvents');
       evt.initEvent('click', true, true);
       document.documentElement.dispatchEvent(evt);
+
+      assert.notOk(instance.getDOMNode().className.match(/\bopen\b/));
     });
   });
 });

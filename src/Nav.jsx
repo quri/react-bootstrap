@@ -1,12 +1,13 @@
 /** @jsx React.DOM */
 
-import React                  from './react-es6';
-import classSet               from './react-es6/lib/cx';
-import BootstrapMixin         from './BootstrapMixin';
-import CollapsableMixin       from './CollapsableMixin';
-import utils                  from './utils';
-import domUtils               from './domUtils';
-import ValidComponentChildren from './ValidComponentChildren';
+var React = require('react');
+var BootstrapMixin = require('./BootstrapMixin');
+var CollapsableMixin = require('./CollapsableMixin');
+var classSet = require('./utils/classSet');
+var domUtils = require('./utils/domUtils');
+var cloneWithProps = require('./utils/cloneWithProps');
+var ValidComponentChildren = require('./utils/ValidComponentChildren');
+var createChainedFunction = require('./utils/createChainedFunction');
 
 
 var Nav = React.createClass({
@@ -18,8 +19,8 @@ var Nav = React.createClass({
     justified: React.PropTypes.bool,
     panel: React.PropTypes.bool,
     onSelect: React.PropTypes.func,
-    isCollapsable: React.PropTypes.bool,
-    isOpen: React.PropTypes.bool,
+    collapsable: React.PropTypes.bool,
+    expanded: React.PropTypes.bool,
     navbar: React.PropTypes.bool
   },
 
@@ -42,11 +43,11 @@ var Nav = React.createClass({
   },
 
   render: function () {
-    var classes = this.props.isCollapsable ? this.getCollapsableClassSet() : {};
+    var classes = this.props.collapsable ? this.getCollapsableClassSet() : {};
 
-    classes['navbar-collapse'] = this.props.isCollapsable;
+    classes['navbar-collapse'] = this.props.collapsable;
 
-    if (this.props.navbar && !this.props.isCollapsable) {
+    if (this.props.navbar && !this.props.collapsable) {
       return this.transferPropsTo(this.renderUl());
     }
 
@@ -64,6 +65,7 @@ var Nav = React.createClass({
     classes['nav-justified'] = this.props.justified;
     classes['panel-tabs'] = this.props.panel;
     classes['navbar-nav'] = this.props.navbar;
+    classes['pull-right'] = this.props.pullRight;
 
     return (
       <ul className={classSet(classes)} ref="ul">
@@ -91,13 +93,13 @@ var Nav = React.createClass({
   },
 
   renderNavItem: function (child) {
-    return utils.cloneWithProps(
+    return cloneWithProps(
       child,
       {
         active: this.getChildActiveProp(child),
         activeKey: this.props.activeKey,
         activeHref: this.props.activeHref,
-        onSelect: utils.createChainedFunction(child.props.onSelect, this.props.onSelect),
+        onSelect: createChainedFunction(child.props.onSelect, this.props.onSelect),
         ref: child.props.ref,
         key: child.props.key,
         navItem: true
@@ -106,4 +108,4 @@ var Nav = React.createClass({
   }
 });
 
-export default = Nav;
+module.exports = Nav;
