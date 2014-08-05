@@ -1,12 +1,12 @@
 /** @jsx React.DOM */
 
-import React          from './react-es6';
-import PropTypes      from './PropTypes' ;
+var React = require('react');
+var CustomPropTypes = require('./utils/CustomPropTypes');
 
 
 var Row = React.createClass({
   propTypes: {
-    componentClass: PropTypes.componentClass
+    componentClass: CustomPropTypes.componentClass.isRequired
   },
 
   getDefaultProps: function () {
@@ -26,4 +26,4 @@ var Row = React.createClass({
   }
 });
 
-export default = Row;
+module.exports = Row;

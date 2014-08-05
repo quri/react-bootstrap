@@ -1,4 +1,5 @@
-import React     from './react-es6';
+var React = require('react');
+var EventListener = require('./utils/EventListener');
 
 /**
  * Checks whether a node is within
@@ -38,7 +39,7 @@ var DropdownStateMixin = {
     }, onStateChangeComplete);
   },
 
-  handleKeyUp: function (e) {
+  handleDocumentKeyUp: function (e) {
     if (e.keyCode === 27) {
       this.setDropdownState(false);
     }
@@ -55,13 +56,20 @@ var DropdownStateMixin = {
   },
 
   bindRootCloseHandlers: function () {
-    document.addEventListener('click', this.handleDocumentClick);
-    document.addEventListener('keyup', this.handleKeyUp);
+    this._onDocumentClickListener =
+      EventListener.listen(document, 'click', this.handleDocumentClick);
+    this._onDocumentKeyupListener =
+      EventListener.listen(document, 'keyup', this.handleDocumentKeyUp);
   },
 
   unbindRootCloseHandlers: function () {
-    document.removeEventListener('click', this.handleDocumentClick);
-    document.removeEventListener('keyup', this.handleKeyUp);
+    if (this._onDocumentClickListener) {
+      this._onDocumentClickListener.remove();
+    }
+
+    if (this._onDocumentKeyupListener) {
+      this._onDocumentKeyupListener.remove();
+    }
   },
 
   componentWillUnmount: function () {
@@ -69,4 +77,4 @@ var DropdownStateMixin = {
   }
 };
 
-export default = DropdownStateMixin;
+module.exports = DropdownStateMixin;

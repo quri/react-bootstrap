@@ -1,11 +1,11 @@
 /** @jsx React.DOM */
 
-import React                  from './react-es6';
-import classSet               from './react-es6/lib/cx';
-import Interpolate            from './Interpolate';
-import BootstrapMixin         from './BootstrapMixin';
-import utils                  from './utils';
-import ValidComponentChildren from './ValidComponentChildren';
+var React = require('react');
+var Interpolate = require('./Interpolate');
+var BootstrapMixin = require('./BootstrapMixin');
+var classSet = require('./utils/classSet');
+var cloneWithProps = require('./utils/cloneWithProps');
+var ValidComponentChildren = require('./utils/ValidComponentChildren');
 
 
 var ProgressBar = React.createClass({
@@ -13,7 +13,7 @@ var ProgressBar = React.createClass({
     min: React.PropTypes.number,
     now: React.PropTypes.number,
     max: React.PropTypes.number,
-    label: React.PropTypes.string,
+    label: React.PropTypes.renderable,
     srOnly: React.PropTypes.bool,
     striped: React.PropTypes.bool,
     active: React.PropTypes.bool
@@ -67,7 +67,7 @@ var ProgressBar = React.createClass({
   },
 
   renderChildBar: function (child) {
-    return utils.cloneWithProps(child, {
+    return cloneWithProps(child, {
       isChild: true,
       key: child.props.key,
       ref: child.props.ref
@@ -83,9 +83,14 @@ var ProgressBar = React.createClass({
 
     var label;
 
-    if (this.props.label) {
-      label = this.props.srOnly ?
-        this.renderScreenReaderOnlyLabel(percentage) : this.renderLabel(percentage);
+    if (typeof this.props.label === "string") {
+      label = this.renderLabel(percentage);
+    } else if (this.props.label) {
+      label = this.props.label;
+    }
+
+    if (this.props.srOnly) {
+      label = this.renderScreenReaderOnlyLabel(label);
     }
 
     return (
@@ -114,13 +119,13 @@ var ProgressBar = React.createClass({
     );
   },
 
-  renderScreenReaderOnlyLabel: function (percentage) {
+  renderScreenReaderOnlyLabel: function (label) {
     return (
       <span className="sr-only">
-        {this.renderLabel(percentage)}
+        {label}
       </span>
     );
   }
 });
 
-export default ProgressBar;
+module.exports = ProgressBar;

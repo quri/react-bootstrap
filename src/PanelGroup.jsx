@@ -1,18 +1,18 @@
 /** @jsx React.DOM */
 
-import React                  from './react-es6';
-import classSet               from './react-es6/lib/cx';
-import BootstrapMixin         from './BootstrapMixin';
-import utils                  from './utils';
-import ValidComponentChildren from './ValidComponentChildren';
+var React = require('react');
+var classSet = require('./utils/classSet');
+var cloneWithProps = require('./utils/cloneWithProps');
+var BootstrapMixin = require('./BootstrapMixin');
+var ValidComponentChildren = require('./utils/ValidComponentChildren');
 
 var PanelGroup = React.createClass({
   mixins: [BootstrapMixin],
 
   propTypes: {
     collapsable: React.PropTypes.bool,
-    activeKey: React.PropTypes.bool,
-    defaultActiveKey: React.PropTypes.bool,
+    activeKey: React.PropTypes.any,
+    defaultActiveKey: React.PropTypes.any,
     onSelect: React.PropTypes.func
   },
 
@@ -47,7 +47,7 @@ var PanelGroup = React.createClass({
       this.props.activeKey != null ? this.props.activeKey : this.state.activeKey;
 
     var props = {
-      bsStyle: this.props.bsStyle,
+      bsStyle: child.props.bsStyle || this.props.bsStyle,
       key: child.props.key,
       ref: child.props.ref
     };
@@ -58,7 +58,7 @@ var PanelGroup = React.createClass({
       props.onSelect = this.handleSelect;
     }
 
-    return utils.cloneWithProps(
+    return cloneWithProps(
       child,
       props
     );
@@ -86,4 +86,4 @@ var PanelGroup = React.createClass({
   }
 });
 
-export default = PanelGroup;
+module.exports = PanelGroup;

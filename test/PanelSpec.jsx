@@ -3,7 +3,7 @@
 
 var React          = require('react');
 var ReactTestUtils = require('react/lib/ReactTestUtils');
-var Panel        = require('../cjs/Panel');
+var Panel          = require('../cjs/Panel');
 
 describe('Panel', function () {
   it('Should have class and body', function () {
@@ -19,6 +19,15 @@ describe('Panel', function () {
           <Panel bsStyle="default">Panel content</Panel>
         );
     assert.ok(instance.getDOMNode().className.match(/\bpanel-default\b/));
+  });
+
+  it('Should honour additional classes passed in, adding not overriding', function () {
+    var instance = ReactTestUtils.renderIntoDocument(
+      <Panel className="bob"/>
+    );
+
+    assert.ok(instance.getDOMNode().className.match(/\bbob\b/));
+    assert.ok(instance.getDOMNode().className.match(/\bpanel\b/));
   });
 
   it('Should have unwrapped header', function () {
@@ -117,19 +126,17 @@ describe('Panel', function () {
     ReactTestUtils.Simulate.click(title.getDOMNode().firstChild);
   });
 
-  it('Should toggle when uncontrolled', function (done) {
+  it('Should toggle when uncontrolled', function () {
     var instance = ReactTestUtils.renderIntoDocument(
           <Panel collapsable={true} defaultExpanded={false} header="Click me">Panel content</Panel>
         );
 
     assert.notOk(instance.state.expanded);
-    // TODO: update to `ReactTestUtils#nextUpdate()`
-    instance.componentDidUpdate = function () {
-      assert.ok(instance.state.expanded);
-      done();
-    };
 
-    var title = ReactTestUtils.findRenderedDOMComponentWithClass(instance, 'panel-title');
-    ReactTestUtils.Simulate.click(title.getDOMNode().firstChild);
+    ReactTestUtils.Simulate.click(
+      ReactTestUtils.findRenderedDOMComponentWithClass(instance, 'panel-title').getDOMNode().firstChild
+    );
+
+    assert.ok(instance.state.expanded);
   });
 });

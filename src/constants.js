@@ -1,4 +1,4 @@
-export default = {
+module.exports = {
   CLASSES: {
     'alert': 'alert',
     'button': 'btn',
@@ -9,6 +9,7 @@ export default = {
     'form': 'form',
     'glyphicon': 'glyphicon',
     'label': 'label',
+    'list-group-item': 'list-group-item',
     'panel': 'panel',
     'panel-group': 'panel-group',
     'progress-bar': 'progress-bar',

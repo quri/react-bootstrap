@@ -1,8 +1,7 @@
 /** @jsx React.DOM */
 
-import React          from './react-es6';
-import classSet       from './react-es6/lib/cx';
-import PropTypes      from './PropTypes';
+var React = require('react');
+var classSet = require('./utils/classSet');
 
 var Table = React.createClass({
   propTypes: {
@@ -35,4 +34,4 @@ var Table = React.createClass({
   }
 });
 
-export default = Table;
+module.exports = Table;

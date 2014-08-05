@@ -195,7 +195,7 @@ var ComponentsPage = React.createClass({
                   <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/PanelGroupControlled.js', 'utf8')} />
 
                   <h3 id="panels-uncontrolled">Uncontrolled PanelGroups</h3>
-                  <p><code>PanelGroup</code>s can also be uncontrolled where they manage their own state. The <code>defualtActiveKey</code> prop dictates which panel is open when initially.</p>
+                  <p><code>PanelGroup</code>s can also be uncontrolled where they manage their own state. The <code>defaultActiveKey</code> prop dictates which panel is open when initially.</p>
                   <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/PanelGroupUncontrolled.js', 'utf8')} />
 
                   <h3 id="panels-accordion">Accordions</h3>
@@ -212,7 +212,7 @@ var ComponentsPage = React.createClass({
                   <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/ModalStatic.js', 'utf8')} />
 
                   <h3 id="modals-live">Live demo</h3>
-                  <p>Use <code>&lt;OverlayTrigger /&gt;</code> to create a real modal that's added to the document body when opened.</p>
+                  <p>Use <code>&lt;ModalTrigger /&gt;</code> to create a real modal that's added to the document body when opened.</p>
                   <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/ModalTrigger.js', 'utf8')} />
 
                   <h3 id="modals-custom">Custom trigger</h3>
@@ -326,6 +326,24 @@ var ComponentsPage = React.createClass({
                   </div>
                 </div>
 
+                {/* Pager */}
+                <div className="bs-docs-section">
+                  <h1 id="pager" className="page-header">Pager<small> Pager, PageItem</small></h1>
+                  <p>Quick previous and next links.</p>
+
+                  <h3>Default</h3>
+                  <p>Centers by default.</p>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/PagerDefault.js', 'utf8')} />
+
+                  <h3>Aligned</h3>
+                  <p>Set the <code>previous</code> or <code>next</code> prop to <code>true</code>, to align left or right.</p>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/PagerAligned.js', 'utf8')} />
+
+                  <h3>Disabled</h3>
+                  <p>Set the <code>disabled</code> prop to <code>true</code> to disable the link.</p>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/PagerDisabled.js', 'utf8')} />
+                </div>
+
                 {/* Alerts */}
                 <div className="bs-docs-section">
                   <h1 id="alerts" className="page-header">Alert messages <small>Alert</small></h1>
@@ -361,6 +379,30 @@ var ComponentsPage = React.createClass({
                   <h2 id="grids-examples">Example grids</h2>
 
                   <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/GridBasic.js', 'utf8')} exampleClassName="bs-example-tabs" />
+                </div>
+
+                {/* ListGroup */}
+                <div className="bs-docs-section">
+                  <h1 id="listgroup" className="page-header">List group<small> ListGroup, ListGroupItem</small></h1>
+                  <p>Quick previous and next links.</p>
+
+                  <h3>Default</h3>
+                  <p>Centers by default.</p>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/ListGroupDefault.js', 'utf8')} />
+
+                  <h3>Linked</h3>
+                  <p>Set the <code>href</code> or <code>onClick</code> prop on <code>ListGroupItem</code>, to create a linked or clickable element.</p>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/ListGroupLinked.js', 'utf8')} />
+
+                  <h3>Styling</h3>
+                  <p>Set the <code>active</code> or <code>disabled</code> prop to <code>true</code> to mark or disable the item.</p>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/ListGroupActive.js', 'utf8')} />
+                  <p>Set the <code>bsStyle</code> prop to style the item</p>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/ListGroupStyle.js', 'utf8')} />
+
+                  <h3>With header</h3>
+                  <p>Set the <code>header</code> prop to create a structured item, with a heading and a body area.</p>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/ListGroupHeader.js', 'utf8')} />
                 </div>
 
                 {/* Labels */}
@@ -485,17 +527,19 @@ var ComponentsPage = React.createClass({
                     <NavItem href="#navs" key={9}>Navs</NavItem>
                     <NavItem href="#navbars" key={10}>Navbars</NavItem>
                     <NavItem href="#tabs" key={11}>Togglable tabs</NavItem>
-                    <NavItem href="#alerts" key={12}>Alerts</NavItem>
-                    <NavItem href="#carousels" key={13}>Carousels</NavItem>
-                    <NavItem href="#grids" key={14}>Grids</NavItem>
-                    <NavItem href="#labels" key={15}>Labels</NavItem>
-                    <NavItem href="#badges" key={16}>Badges</NavItem>
-                    <NavItem href="#jumbotron" key={17}>Jumbotron</NavItem>
-                    <NavItem href="#page-header" key={18}>Page Header</NavItem>
-                    <NavItem href="#wells" key={19}>Wells</NavItem>
-                    <NavItem href="#glyphicons" key={20}>Glyphicons</NavItem>
-                    <NavItem href="#tables" key={21}>Tables</NavItem>
-                    <NavItem href="#input" key={22}>Input</NavItem>
+                    <NavItem href="#pager" key={12}>Pager</NavItem>
+                    <NavItem href="#alerts" key={13}>Alerts</NavItem>
+                    <NavItem href="#carousels" key={14}>Carousels</NavItem>
+                    <NavItem href="#grids" key={15}>Grids</NavItem>
+                    <NavItem href="#listgroup" key={16}>List group</NavItem>
+                    <NavItem href="#labels" key={17}>Labels</NavItem>
+                    <NavItem href="#badges" key={18}>Badges</NavItem>
+                    <NavItem href="#jumbotron" key={19}>Jumbotron</NavItem>
+                    <NavItem href="#page-header" key={20}>Page Header</NavItem>
+                    <NavItem href="#wells" key={21}>Wells</NavItem>
+                    <NavItem href="#glyphicons" key={22}>Glyphicons</NavItem>
+                    <NavItem href="#tables" key={23}>Tables</NavItem>
+                    <NavItem href="#input" key={24}>Input</NavItem>
                   </Nav>
                   <a className="back-to-top" href="#top">
                   Back to top
