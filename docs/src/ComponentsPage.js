@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 'use strict';
 
 var React = require('react');
@@ -218,6 +216,20 @@ var ComponentsPage = React.createClass({
                   <h3 id="modals-custom">Custom trigger</h3>
                   <p>Use <code>&lt;OverlayMixin /&gt;</code> in a custom component to manage the modal's state yourself.</p>
                   <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/ModalOverlayMixin.js', 'utf8')} />
+
+                  <h3 id="modals-custom">Contained Modal</h3>
+                  <p>You will need to add the following css to your project and ensure that your container has the <code>modal-container</code> class.</p>
+                  <pre>
+                    {React.DOM.code(null,
+                      ".modal-container {\n" +
+                      "  position: relative;\n" +
+                      "}\n" +
+                      ".modal-container .modal, .modal-container .modal-backdrop {\n" +
+                      "  position: absolute;\n" +
+                      "}\n"
+                    )}
+                  </pre>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/ModalContained.js', 'utf8')} />
                 </div>
 
                 {/* Tooltip */}
@@ -500,7 +512,7 @@ var ComponentsPage = React.createClass({
                   <p>Supports <code>select</code>, <code>textarea</code>, <code>static</code> as well as standard HTML input types.</p>
                   <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/InputTypes.js', 'utf8')} />
                   <h2 id="input-addons">Add-ons</h2>
-                  <p>Use <code>addonBefore</code> and <code>addonAfter</code>. Does not support buttons directly, but they support anything that is renderable.
+                  <p>Use <code>addonBefore</code> and <code>addonAfter</code> for normal addons, <code>buttonBefore</code> and <code>buttonAfter</code> for button addons.
                   Exotic configurations may require some css on your side.</p>
                   <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/InputAddons.js', 'utf8')} />
                   <h2 id="input-validation">Validation</h2>

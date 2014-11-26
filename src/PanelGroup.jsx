@@ -1,8 +1,8 @@
-/** @jsx React.DOM */
-
 var React = require('react');
+var joinClasses = require('./utils/joinClasses');
 var classSet = require('./utils/classSet');
 var cloneWithProps = require('./utils/cloneWithProps');
+
 var BootstrapMixin = require('./BootstrapMixin');
 var ValidComponentChildren = require('./utils/ValidComponentChildren');
 
@@ -31,30 +31,30 @@ var PanelGroup = React.createClass({
   },
 
   render: function () {
-    classes = this.getBsClassSet();
+    var classes = this.getBsClassSet();
     classes['accordion'] = this.props.accordion;
     classes['accordion-alt'] = this.props.accordion;
 
-    return this.transferPropsTo(
-      <div className={classSet(classes)} onSelect={null} onSelect={null}>
+    return (
+      <div {...this.props} className={joinClasses(this.props.className, classSet(classes))} onSelect={null}>
         {ValidComponentChildren.map(this.props.children, this.renderPanel)}
       </div>
     );
   },
 
-  renderPanel: function (child) {
+  renderPanel: function (child, index) {
     var activeKey =
       this.props.activeKey != null ? this.props.activeKey : this.state.activeKey;
 
     var props = {
       bsStyle: child.props.bsStyle || this.props.bsStyle,
-      key: child.props.key,
-      ref: child.props.ref
+      key: child.key ? child.key : index,
+      ref: child.ref
     };
 
     if (this.props.accordion) {
       props.collapsable = true;
-      props.expanded = (child.props.key === activeKey);
+      props.expanded = (child.props.eventKey === activeKey);
       props.onSelect = this.handleSelect;
     }
 
