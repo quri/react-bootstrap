@@ -4,6 +4,7 @@ var classSet = require('./utils/classSet');
 var Button = require('./Button');
 
 var Input = React.createClass({
+
   propTypes: {
     type: React.PropTypes.string,
     label: React.PropTypes.node,
@@ -12,6 +13,7 @@ var Input = React.createClass({
     addonAfter: React.PropTypes.node,
     buttonBefore: React.PropTypes.node,
     buttonAfter: React.PropTypes.node,
+    bsSize: React.PropTypes.oneOf(['small', 'medium', 'large']),
     bsStyle: function(props) {
       if (props.type === 'submit') {
         // Return early if `type=submit` as the `Button` component
@@ -37,7 +39,11 @@ var Input = React.createClass({
       return this.props.value;
     }
     else if (this.props.type) {
-      return this.getInputDOMNode().value;
+      if (this.props.type == "select" && this.props.multiple) {
+        return this.getSelectedOptions();
+      } else {
+        return this.getInputDOMNode().value;
+      }
     }
     else {
       throw Error('Cannot use getValue without specifying input type.');
@@ -46,6 +52,23 @@ var Input = React.createClass({
 
   getChecked: function () {
     return this.getInputDOMNode().checked;
+  },
+
+  getSelectedOptions: function () {
+    var values = [];
+
+    Array.prototype.forEach.call(
+      this.getInputDOMNode().getElementsByTagName('option'),
+      function (option) {
+        if (option.selected) {
+          var value = option.getAttribute('value') || option.innerHTML;
+
+          values.push(value);
+        }
+      }
+    );
+
+    return values;
   },
 
   isCheckboxOrRadio: function () {
@@ -119,8 +142,14 @@ var Input = React.createClass({
       </span>
     ) : null;
 
+    var inputGroupClassName;
+    switch (this.props.bsSize) {
+      case 'small': inputGroupClassName = 'input-group-sm'; break;
+      case 'large': inputGroupClassName = 'input-group-lg'; break;
+    }
+
     return addonBefore || addonAfter || buttonBefore || buttonAfter ? (
-      <div className="input-group" key="input-group">
+      <div className={joinClasses(inputGroupClassName, 'input-group')} key="input-group">
         {addonBefore}
         {buttonBefore}
         {children}

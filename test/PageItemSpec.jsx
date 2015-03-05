@@ -2,7 +2,7 @@
 
 var React          = require('react');
 var ReactTestUtils = require('react/lib/ReactTestUtils');
-var PageItem       = require('../cjs/PageItem');
+var PageItem       = require('../lib/PageItem');
 
 describe('PageItem', function () {
   it('Should output a "list item" as root element, and an "anchor" as a child item', function () {
@@ -53,6 +53,26 @@ describe('PageItem', function () {
     }
     var instance = ReactTestUtils.renderIntoDocument(
       <PageItem disabled onSelect={handleSelect}>Next</PageItem>
+    );
+    ReactTestUtils.Simulate.click(ReactTestUtils.findRenderedDOMComponentWithTag(instance, 'a'));
+  });
+
+  it('Should set target attribute on anchor', function () {
+    var instance = ReactTestUtils.renderIntoDocument(
+      <PageItem next href="#" target="_blank">Next</PageItem>
+    );
+
+    var anchor = ReactTestUtils.findRenderedDOMComponentWithTag(instance, 'a');
+    assert.equal(anchor.getDOMNode().getAttribute('target'), '_blank');
+  });
+
+  it('Should call "onSelect" with target attribute', function (done) {
+    function handleSelect(key, href, target) {
+      assert.equal(target, "_blank");
+      done();
+    }
+    var instance = ReactTestUtils.renderIntoDocument(
+      <PageItem eventKey={1} onSelect={handleSelect} target="_blank">Next</PageItem>
     );
     ReactTestUtils.Simulate.click(ReactTestUtils.findRenderedDOMComponentWithTag(instance, 'a'));
   });

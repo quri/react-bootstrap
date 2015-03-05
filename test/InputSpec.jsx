@@ -2,10 +2,10 @@
 
 var React          = require('react');
 var ReactTestUtils = require('react/lib/ReactTestUtils');
-var Input          = require('../cjs/Input');
-var Button         = require('../cjs/Button');
-var DropdownButton = require('../cjs/DropdownButton');
-var MenuItem       = require('../cjs/MenuItem');
+var Input          = require('../lib/Input');
+var Button         = require('../lib/Button');
+var DropdownButton = require('../lib/DropdownButton');
+var MenuItem       = require('../lib/MenuItem');
 
 describe('Input', function () {
   beforeEach(function() {
@@ -123,6 +123,22 @@ describe('Input', function () {
     assert.ok(ReactTestUtils.findRenderedDOMComponentWithClass(instance, 'input-group-addon'));
   });
 
+  it('renders input-group with sm or lg class name when bsSize is small or large', function () {
+    var instance = ReactTestUtils.renderIntoDocument(
+      <Input addonBefore="$" bsSize="small" />
+    );
+
+    assert.ok(ReactTestUtils.findRenderedDOMComponentWithClass(instance, 'input-group'));
+    assert.ok(ReactTestUtils.findRenderedDOMComponentWithClass(instance, 'input-group-sm'));
+
+    instance = ReactTestUtils.renderIntoDocument(
+      <Input addonBefore="$" bsSize="large" />
+    );
+
+    assert.ok(ReactTestUtils.findRenderedDOMComponentWithClass(instance, 'input-group'));
+    assert.ok(ReactTestUtils.findRenderedDOMComponentWithClass(instance, 'input-group-lg'));
+  });
+
   it('renders btn-group', function() {
     var instance = ReactTestUtils.renderIntoDocument(
       <Input buttonAfter={<Button>!</Button>} />
@@ -213,6 +229,30 @@ describe('Input', function () {
 
     assert.equal(instance.getChecked(), true);
   });
+
+  it('returns the only selected option for select', function () {
+    var instance = ReactTestUtils.renderIntoDocument(
+      <Input type="select" value={'one'}>
+        <option value="one">one</option>
+        <option value="two">two</option>
+        <option value="three">three</option>
+      </Input>
+    );
+
+    assert.equal(instance.getValue(), 'one');
+  })
+
+  it('returns all selected options for multiple select', function () {
+    var instance = ReactTestUtils.renderIntoDocument(
+      <Input type="select" multiple value={['one','two']}>
+        <option value="one">one</option>
+        <option value="two">two</option>
+        <option value="three">three</option>
+      </Input>
+    );
+
+    assert.deepEqual(instance.getValue(), ['one', 'two']);
+  })
 
   it('renders a disabled input correctly', function () {
     var instance = ReactTestUtils.renderIntoDocument(

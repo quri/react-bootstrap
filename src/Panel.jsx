@@ -42,7 +42,7 @@ var Panel = React.createClass({
   },
 
   getCollapsableDimensionValue: function () {
-    return this.refs.body.getDOMNode().offsetHeight;
+    return this.refs.panel.getDOMNode().scrollHeight;
   },
 
   getCollapsableDOMNode: function () {
@@ -76,11 +76,63 @@ var Panel = React.createClass({
   },
 
   renderBody: function () {
-    return (
-      <div className="panel-body" ref="body">
-        {this.props.children}
-      </div>
-    );
+    var allChildren = this.props.children;
+    var bodyElements = [];
+
+    function getProps() {
+      return {key: bodyElements.length};
+    }
+
+    function addPanelChild (child) {
+      bodyElements.push(cloneWithProps(child, getProps()));
+    }
+
+    function addPanelBody (children) {
+      bodyElements.push(
+        <div className="panel-body" {...getProps()}>
+          {children}
+        </div>
+      );
+    }
+
+    // Handle edge cases where we should not iterate through children.
+    if (!Array.isArray(allChildren) || allChildren.length == 0) {
+      if (this.shouldRenderFill(allChildren)) {
+        addPanelChild(allChildren);
+      } else {
+        addPanelBody(allChildren);
+      }
+    } else {
+      var panelBodyChildren = [];
+
+      function maybeRenderPanelBody () {
+        if (panelBodyChildren.length == 0) {
+          return;
+        }
+
+        addPanelBody(panelBodyChildren);
+        panelBodyChildren = [];
+      }
+
+      allChildren.forEach(function(child) {
+        if (this.shouldRenderFill(child)) {
+          maybeRenderPanelBody();
+
+          // Separately add the filled element.
+          addPanelChild(child);
+        } else {
+          panelBodyChildren.push(child);
+        }
+      }.bind(this));
+
+      maybeRenderPanelBody();
+    }
+
+    return bodyElements;
+  },
+
+  shouldRenderFill: function (child) {
+    return React.isValidElement(child) && child.props.fill != null
   },
 
   renderHeading: function () {

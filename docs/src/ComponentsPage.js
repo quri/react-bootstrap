@@ -3,10 +3,10 @@
 var React = require('react');
 var fs = require('fs');
 
-var Affix = require('../../cjs/Affix');
-var Nav = require('../../cjs/Nav');
-var SubNav = require('../../cjs/SubNav');
-var NavItem = require('../../cjs/NavItem');
+var Affix = require('../../lib/Affix');
+var Nav = require('../../lib/Nav');
+var SubNav = require('../../lib/SubNav');
+var NavItem = require('../../lib/NavItem');
 
 var NavMain = require('./NavMain');
 var PageHeader = require('./PageHeader');
@@ -160,6 +160,10 @@ var ComponentsPage = React.createClass({
                   <p>Button dropdowns work with buttons of all sizes.</p>
                   <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/DropdownButtonSizes.js', 'utf8')} />
 
+                  <h3 id="btn-dropdown-nocaret">No caret variation</h3>
+                  <p>Remove the caret using the <code>noCaret</code> prop.</p>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/DropdownButtonNoCaret.js', 'utf8')} />
+
                   <h3 id="btn-dropdowns-dropup">Dropup variation</h3>
                   <p>Trigger dropdown menus that site above the button by adding the <code>dropup</code> prop.</p>
                   <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/SplitButtonDropup.js', 'utf8')} />
@@ -187,6 +191,10 @@ var ComponentsPage = React.createClass({
                   <h3 id="panels-contextual">Contextual alternatives</h3>
                   <p>Like other components, easily make a panel more meaningful to a particular context by adding a <code>bsStyle</code> prop.</p>
                   <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/PanelContextual.js', 'utf8')} />
+
+                  <h3 id="panels-contextual">With tables and list groups</h3>
+                  <p>Add the <code>fill</code> prop to <code>&lt;Table /&gt;</code> or <code>&lt;ListGroup /&gt;</code> elements to make them fill the panel.</p>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/PanelListGroupFill.js', 'utf8')} />
 
                   <h3 id="panels-controlled">Controlled PanelGroups</h3>
                   <p><code>PanelGroup</code>s can be controlled by a parent component. The <code>activeKey</code> prop dictates which panel is open.</p>
@@ -323,8 +331,28 @@ var ComponentsPage = React.createClass({
                 <div className="bs-docs-section">
                   <h1 id="navbars" className="page-header">Navbars <small>Navbar, Nav, NavItem</small></h1>
                   <h2 id="navbars-examples">Example navbars</h2>
+                  <p>You can specify a brand by passing a renderable component or string in <code>brand</code></p>
+                  <p>Navbars are by default accessible and will provide <code>role="navigation"</code>.</p>
+                  <p>They also supports all the different Bootstrap classes as properties. Just camelCase the css class and remove navbar from it. For example <code>navbar-fixed-top</code> becomes the property <code>fixedTop</code>. The different properties are <code>fixedTop</code>, <code>fixedBottom</code>, <code>staticTop</code>, <code>inverse</code>, <code>fluid</code>.</p>
+                  <p>You can drag elements to the right by specifying the <code>right</code> property on a nav group.</p>
 
                   <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/NavbarBasic.js', 'utf8')} />
+
+                  <h3>Mobile Friendly</h3>
+                  <p>To have a mobile friendly Navbar, specify the property <code>toggleNavKey</code> on the Navbar with a value corresponding to an <code>eventKey</code> of one of his <code>Nav</code> children. This child will be the one collapsed.</p>
+                  <p>By setting the property {React.DOM.code(null, "defaultNavExpanded={true}")} the Navbar will start expanded by default.</p>
+                  <div className="bs-callout bs-callout-info">
+                    <h4>Scrollbar overflow</h4>
+                    <p>The height of the collapsable is slightly smaller than the real height. To hide the scroll bar, add the following css to your style files.</p>
+                    <pre>
+                      {React.DOM.code(null,
+                        ".navbar-collapse {\n" +
+                        "  overflow: hidden;\n" +
+                        "}\n"
+                      )}
+                    </pre>
+                  </div>
+                  <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/NavbarCollapsable.js', 'utf8')} />
                 </div>
 
                 {/* Tabbed Areas */}
@@ -509,7 +537,7 @@ var ComponentsPage = React.createClass({
                   The helper method <code>getInputDOMNode()</code> returns the internal input element.</p>
                   <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/Input.js', 'utf8')} />
                   <h2 id="input-types">Types</h2>
-                  <p>Supports <code>select</code>, <code>textarea</code>, <code>static</code> as well as standard HTML input types.</p>
+                  <p>Supports <code>select</code>, <code>textarea</code>, <code>static</code> as well as standard HTML input types. <code>getValue()</code> returns an array for multiple select.</p>
                   <ReactPlayground codeText={fs.readFileSync(__dirname + '/../examples/InputTypes.js', 'utf8')} />
                   <h2 id="input-addons">Add-ons</h2>
                   <p>Use <code>addonBefore</code> and <code>addonAfter</code> for normal addons, <code>buttonBefore</code> and <code>buttonAfter</code> for button addons.

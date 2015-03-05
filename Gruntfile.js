@@ -8,13 +8,13 @@ module.exports = function (grunt) {
         expand: true,
         cwd: 'src/',
         src: ['**/*.js'],
-        dest: 'amd/'
+        dest: 'amd/lib'
       },
       transpiled: {
         expand: true,
         cwd: 'transpiled/',
         src: ['**/*.js'],
-        dest: 'amd/'
+        dest: 'amd/lib'
       }
     },
 
@@ -23,6 +23,12 @@ module.exports = function (grunt) {
         files: [
           {
             src: ['**/*'],
+            dest: 'amd/',
+            cwd: 'tools/amd',
+            expand: true
+          },
+          {
+            src: ['.gitignore-template'],
             dest: 'amd/',
             cwd: 'tools/amd',
             expand: true
@@ -35,17 +41,17 @@ module.exports = function (grunt) {
             expand: true,
             cwd: 'transpiled/',
             src: ['**/*.js'],
-            dest: 'cjs/'
+            dest: 'lib/'
           },
           {
             expand: true,
             cwd: 'src/',
             src: ['**/*.js'],
-            dest: 'cjs/'
+            dest: 'lib/'
           },
           {
             src: ['**/*'],
-            dest: 'cjs/',
+            dest: 'lib/',
             cwd: 'tools/cjs',
             expand: true
           }
@@ -88,7 +94,7 @@ module.exports = function (grunt) {
 
     clean: {
       transpiled: ['transpiled'],
-      cjs: ['cjs'],
+      cjs: ['lib'],
       amd: ['amd'],
       test: ['test-built']
     },
@@ -156,7 +162,16 @@ module.exports = function (grunt) {
         src: 'amd/<%= pkg.name %>.js',
         dest: 'amd/<%= pkg.name %>.min.js'
       }
-    }
+    },
+
+    karma: {
+      unit: {
+        configFile: 'karma.ci.js'
+      },
+      dev: {
+        configFile: 'karma.dev.js'
+      }
+    },
 
   });
 
@@ -168,6 +183,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
+  grunt.loadNpmTasks('grunt-karma');
 
   grunt.registerTask('build', [
     'clean:amd',
@@ -182,6 +198,18 @@ module.exports = function (grunt) {
     'uglify:build',
     'clean:transpiled'
   ]);
+
+  grunt.registerTask('test', [
+    'build',
+    'karma:unit'
+  ]);
+
+  grunt.registerTask('test-watch', [
+    'build',
+    'karma:dev'
+  ]);
+
+  require('./tools/release/tasks')(grunt);
 
   grunt.registerTask('default', ['build']);
 

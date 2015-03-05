@@ -2,7 +2,7 @@
 
 var React          = require('react');
 var ReactTestUtils = require('react/lib/ReactTestUtils');
-var Badge          = require('../cjs/Badge');
+var Badge          = require('../lib/Badge');
 
 describe('Badge', function () {
   it('Should output a badge with content', function () {
@@ -18,6 +18,16 @@ describe('Badge', function () {
     var instance = ReactTestUtils.renderIntoDocument(
       <Badge>
         Content
+      </Badge>
+    );
+    assert.ok(instance.getDOMNode().className.match(/\bbadge\b/));
+  });
+
+  it('Should have a badge using a number', function () {
+    var count = 42;
+    var instance = ReactTestUtils.renderIntoDocument(
+      <Badge>
+        {count}
       </Badge>
     );
     assert.ok(instance.getDOMNode().className.match(/\bbadge\b/));

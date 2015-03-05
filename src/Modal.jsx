@@ -58,7 +58,7 @@ var Modal = React.createClass({
         onClick={this.props.backdrop === true ? this.handleBackdropClick : null}
         ref="modal">
         <div className={classSet(dialogClasses)}>
-          <div className="modal-content">
+          <div className="modal-content" style={{overflow: 'hidden'}}>
             {this.props.title ? this.renderHeader() : null}
             {this.props.children}
           </div>
@@ -97,8 +97,17 @@ var Modal = React.createClass({
         );
     }
 
+    var style = this.props.bsStyle;
+    var classes = {
+      'modal-header': true
+    };
+    classes['bg-' + style] = style;
+    classes['text-' + style] = style;
+
+    var className = classSet(classes);
+
     return (
-      <div className="modal-header">
+      <div className={className}>
         {closeButton}
         {this.renderTitle()}
       </div>
@@ -124,6 +133,9 @@ var Modal = React.createClass({
     this._onDocumentKeyupListener =
       EventListener.listen(document, 'keyup', this.handleDocumentKeyUp);
 
+    var container = (this.props.container && this.props.container.getDOMNode()) || document.body;
+    container.className += container.className.length ? ' modal-open' : 'modal-open';
+
     if (this.props.backdrop) {
       this.iosClickHack();
     }
@@ -137,6 +149,8 @@ var Modal = React.createClass({
 
   componentWillUnmount: function () {
     this._onDocumentKeyupListener.remove();
+    var container = (this.props.container && this.props.container.getDOMNode()) || document.body;
+    container.className = container.className.replace(/ ?modal-open/, '');
   },
 
   handleBackdropClick: function (e) {

@@ -2,10 +2,10 @@
 
 var React          = require('react');
 var ReactTestUtils = require('react/lib/ReactTestUtils');
-var DropdownButton = require('../cjs/DropdownButton');
-var MenuItem       = require('../cjs/MenuItem');
-var DropdownMenu   = require('../cjs/DropdownMenu');
-var Button         = require('../cjs/Button');
+var DropdownButton = require('../lib/DropdownButton');
+var MenuItem       = require('../lib/MenuItem');
+var DropdownMenu   = require('../lib/DropdownMenu');
+var Button         = require('../lib/Button');
 
 describe('DropdownButton', function () {
   var instance;
@@ -26,8 +26,8 @@ describe('DropdownButton', function () {
 
     var button = ReactTestUtils.findRenderedComponentWithType(instance, Button).getDOMNode();
     assert.ok(instance.getDOMNode().className.match(/\bbtn-group\b/));
+    assert.ok(instance.getDOMNode().className.match(/\btest-class\b/));
     assert.ok(button.className.match(/\bbtn\b/));
-    assert.ok(button.className.match(/\btest-class\b/));
     assert.equal(button.nodeName, 'BUTTON');
     assert.equal(button.type, 'button');
     assert.ok(button.className.match(/\bdropdown-toggle\b/));
@@ -171,10 +171,36 @@ describe('DropdownButton', function () {
     var button = ReactTestUtils.findRenderedComponentWithType(instance, Button).getDOMNode();
     assert.equal(li.nodeName, 'LI');
     assert.ok(li.className.match(/\bdropdown\b/));
-    assert.ok(button.className.match(/\btest-class\b/));
+    assert.ok(li.className.match(/\btest-class\b/));
     assert.equal(button.nodeName, 'A');
     assert.ok(button.className.match(/\bdropdown-toggle\b/));
     assert.ok(button.lastChild.className.match(/\bcaret\b/));
     assert.equal(button.innerText.trim(), 'Title');
+  });
+
+  it('should render a caret by default', function() {
+    instance = ReactTestUtils.renderIntoDocument(
+        <DropdownButton title="Title">
+          <MenuItem eventKey="1">MenuItem 1 content</MenuItem>
+          <MenuItem eventKey="2">MenuItem 2 content</MenuItem>
+        </DropdownButton>
+    );
+
+    var button = ReactTestUtils.findRenderedComponentWithType(instance, Button).getDOMNode();
+    var carets = button.getElementsByClassName('caret');
+    assert.equal(carets.length, 1);
+  });
+
+  it('should not render a caret if noCaret prop is given', function() {
+    instance = ReactTestUtils.renderIntoDocument(
+        <DropdownButton title="Title" noCaret>
+          <MenuItem eventKey="1">MenuItem 1 content</MenuItem>
+          <MenuItem eventKey="2">MenuItem 2 content</MenuItem>
+        </DropdownButton>
+    );
+
+    var button = ReactTestUtils.findRenderedComponentWithType(instance, Button).getDOMNode();
+    var carets = button.getElementsByClassName('caret');
+    assert.equal(carets.length, 0);
   });
 });

@@ -2,7 +2,7 @@
 
 var React          = require('react');
 var ReactTestUtils = require('react/lib/ReactTestUtils');
-var Button         = require('../cjs/Button');
+var Button         = require('../lib/Button');
 
 describe('Button', function () {
   it('Should output a button', function () {
@@ -62,6 +62,17 @@ describe('Button', function () {
     );
     assert.equal(instance.getDOMNode().nodeName, 'INPUT');
     assert.equal(instance.getDOMNode().getAttribute('href'), href);
+  });
+
+  it('Should output an anchor if called with a target', function () {
+    var target = '_blank';
+    var instance = ReactTestUtils.renderIntoDocument(
+      <Button target={target}>
+        Title
+      </Button>
+    );
+    assert.equal(instance.getDOMNode().nodeName, 'A');
+    assert.equal(instance.getDOMNode().getAttribute('target'), target);
   });
 
   it('Should call onClick callback', function (done) {

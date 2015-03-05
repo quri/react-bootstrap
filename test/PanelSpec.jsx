@@ -2,7 +2,8 @@
 
 var React          = require('react');
 var ReactTestUtils = require('react/lib/ReactTestUtils');
-var Panel          = require('../cjs/Panel');
+var Panel          = require('../lib/Panel');
+var Table          = require('../lib/Table');
 
 describe('Panel', function () {
   it('Should have class and body', function () {
@@ -136,5 +137,41 @@ describe('Panel', function () {
     );
 
     assert.ok(instance.state.expanded);
+  });
+
+  it('Should not wrap panel-filling tables in a panel body', function () {
+    var instance = ReactTestUtils.renderIntoDocument(
+      <Panel>
+        Panel content
+        <Table fill />
+        More panel content
+      </Panel>
+    );
+
+    var children = instance.getDOMNode().children;
+    assert.equal(children.length, 3);
+
+    assert.equal(children[0].nodeName, 'DIV');
+    assert.ok(children[0].className.match(/\bpanel-body\b/));
+
+    assert.equal(children[1].nodeName, 'TABLE');
+    assert.notOk(children[1].className.match(/\bpanel-body\b/));
+
+    assert.equal(children[2].nodeName, 'DIV');
+    assert.ok(children[2].className.match(/\bpanel-body\b/));
+  });
+
+  it('Should not wrap single panel-fill table in a panel body', function () {
+    var instance = ReactTestUtils.renderIntoDocument(
+      <Panel>
+        <Table fill />
+      </Panel>
+    );
+
+    var children = instance.getDOMNode().children;
+    assert.equal(children.length, 1);
+
+    assert.equal(children[0].nodeName, 'TABLE');
+    assert.notOk(children[0].className.match(/\bpanel-body\b/));
   });
 });

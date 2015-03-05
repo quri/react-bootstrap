@@ -22,20 +22,22 @@ var DropdownButton = React.createClass({
     href:      React.PropTypes.string,
     onClick:   React.PropTypes.func,
     onSelect:  React.PropTypes.func,
-    navItem:   React.PropTypes.bool
+    navItem:   React.PropTypes.bool,
+    noCaret:   React.PropTypes.bool
   },
 
   render: function () {
-    var className = 'dropdown-toggle';
-
     var renderMethod = this.props.navItem ?
       'renderNavItem' : 'renderButtonGroup';
+
+    var caret = this.props.noCaret ?
+        null : (<span className="caret" />);
 
     return this[renderMethod]([
       <Button
         {...this.props}
         ref="dropdownButton"
-        className={joinClasses(this.props.className, className)}
+        className="dropdown-toggle"
         onClick={this.handleDropdownClick}
         key={0}
         navDropdown={this.props.navItem}
@@ -44,7 +46,7 @@ var DropdownButton = React.createClass({
         pullRight={null}
         dropup={null}>
         {this.props.title}{' '}
-        <span className="caret" />
+        {caret}
       </Button>,
       <DropdownMenu
         ref="menu"
@@ -65,7 +67,7 @@ var DropdownButton = React.createClass({
     return (
       <ButtonGroup
         bsSize={this.props.bsSize}
-        className={classSet(groupClasses)}>
+        className={joinClasses(this.props.className, classSet(groupClasses))}>
         {children}
       </ButtonGroup>
     );
@@ -79,7 +81,7 @@ var DropdownButton = React.createClass({
       };
 
     return (
-      <li className={classSet(classes)}>
+      <li className={joinClasses(this.props.className, classSet(classes))}>
         {children}
       </li>
     );

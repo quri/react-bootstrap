@@ -2,7 +2,7 @@
 
 var React          = require('react');
 var ReactTestUtils = require('react/lib/ReactTestUtils');
-var MenuItem       = require('../cjs/MenuItem');
+var MenuItem       = require('../lib/MenuItem');
 
 
 describe('MenuItem', function () {
@@ -82,6 +82,31 @@ describe('MenuItem', function () {
 
     assert(instance.getDOMNode().className.match(/\bdropdown-header\b/), 'Has no header class');
     assert.equal(instance.getDOMNode().innerHTML, 'Title');
+  });
+
+  it('Should set target attribute on anchor', function () {
+    var instance = ReactTestUtils.renderIntoDocument(
+      <MenuItem target="_blank">
+        Title
+      </MenuItem>
+    );
+
+    var anchor = ReactTestUtils.findRenderedDOMComponentWithTag(instance, 'a');
+    assert.equal(anchor.getDOMNode().getAttribute('target'), '_blank');
+  });
+
+  it('Should call `onSelect` with target attribute', function (done) {
+    function handleSelect(key, href, target) {
+      assert.equal(href, 'link');
+      assert.equal(target, '_blank');
+      done();
+    }
+    var instance = ReactTestUtils.renderIntoDocument(
+      <MenuItem onSelect={handleSelect} target="_blank" href="link">
+        Title
+      </MenuItem>
+    );
+    ReactTestUtils.Simulate.click(ReactTestUtils.findRenderedDOMComponentWithTag(instance, 'a'));
   });
 });
 

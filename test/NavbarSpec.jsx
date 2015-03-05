@@ -2,8 +2,8 @@
 
 var React          = require('react');
 var ReactTestUtils = require('react/lib/ReactTestUtils');
-var Navbar         = require('../cjs/Navbar');
-var Nav            = require('../cjs/Nav');
+var Navbar         = require('../lib/Navbar');
+var Nav            = require('../lib/Nav');
 
 describe('Nav', function () {
 
@@ -123,5 +123,44 @@ describe('Nav', function () {
     assert.ok(navNode);
     assert.equal(navNode.nodeName, 'UL');
     assert.equal(navNode.parentNode.nodeName, 'DIV');
+  });
+
+  it('Should add header when toggleNavKey is 0', function () {
+    var instance = ReactTestUtils.renderIntoDocument(
+      <Navbar toggleNavKey={0}>
+        <Nav eventKey={0}>
+        </Nav>
+      </Navbar>
+    );
+
+    var header = ReactTestUtils.findRenderedDOMComponentWithClass(instance, 'navbar-header');
+
+    assert.ok(header);
+  });
+
+  it('Should add header when toggleNavKey is 1', function () {
+    var instance = ReactTestUtils.renderIntoDocument(
+      <Navbar toggleNavKey={1}>
+        <Nav eventKey={1}>
+        </Nav>
+      </Navbar>
+    );
+
+    var header = ReactTestUtils.findRenderedDOMComponentWithClass(instance, 'navbar-header');
+
+    assert.ok(header);
+  });
+
+  it('Should add header when toggleNavKey is string', function () {
+    var instance = ReactTestUtils.renderIntoDocument(
+      <Navbar toggleNavKey={'string'}>
+        <Nav eventKey={'string'}>
+        </Nav>
+      </Navbar>
+    );
+
+    var header = ReactTestUtils.findRenderedDOMComponentWithClass(instance, 'navbar-header');
+
+    assert.ok(header);
   });
 });
