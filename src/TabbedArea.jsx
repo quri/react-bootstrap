@@ -26,7 +26,7 @@ var TabbedArea = React.createClass({
     animation: React.PropTypes.bool,
     panel: React.PropTypes.bool,
     onSelect: React.PropTypes.func,
-    title: React.PropTypes.renderable
+    title: React.PropTypes.node
   },
 
   getDefaultProps: function () {
